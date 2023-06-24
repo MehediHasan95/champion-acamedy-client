@@ -1,6 +1,6 @@
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useContext } from "react";
 import { ThemesContext } from "../../context/ThemesProvider";
@@ -57,7 +57,7 @@ function Navbar() {
           className="avatar px-0 lg:px-3 tooltip tooltip-bottom hidden lg:block"
           data-tip="Profile"
         >
-          <div className="w-10 rounded-full">
+          <div className="w-8 rounded-full">
             <img src="" alt="profile" />
           </div>
         </div>
@@ -88,17 +88,19 @@ function Navbar() {
             </label>
           </div>
           <div className="flex-1 justify-between px-2 mx-2">
-            <div className="flex">
-              <img src={logo} alt="logo" className="w-8 h-8" />
-              <span className="font-lobster text-2xl text-royalPurple">
-                Champion
-              </span>
-            </div>
+            <Link to="/">
+              <div className="flex">
+                <img src={logo} alt="logo" className="w-8 h-8" />
+                <span className="font-lobster text-2xl text-royalPurple">
+                  Champion
+                </span>
+              </div>
+            </Link>
             <div
               className="avatar px-3 tooltip tooltip-bottom block lg:hidden"
               data-tip="Profile"
             >
-              <div className="w-10 rounded-full">
+              <div className="w-8 rounded-full">
                 <img src="" alt="profile" />
               </div>
             </div>
