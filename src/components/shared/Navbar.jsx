@@ -110,7 +110,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side z-10">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
         <ul className="p-4 w-80 h-full bg-base-200">{navItems}</ul>
       </div>

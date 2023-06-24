@@ -1,7 +1,9 @@
+import BannerSlider from "./BannerSlider";
+
 function Home() {
   return (
-    <div className="min-h-screen">
-      <h1>Home</h1>
+    <div>
+      <BannerSlider />
     </div>
   );
 }

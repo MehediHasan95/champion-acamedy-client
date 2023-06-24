@@ -6,6 +6,7 @@ export default {
     extend: {
       fontFamily: {
         lobster: ["Lobster", "cursive"],
+        dmSerif: ["DM Serif Display", "serif"],
       },
       colors: {
         royalPurple: "#6951AE",
