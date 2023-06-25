@@ -16,9 +16,10 @@ function ThemesProvider({ children }) {
     }
   }, [themes]);
 
-  const dest = { themes, setThemes };
   return (
-    <ThemesContext.Provider value={dest}>{children}</ThemesContext.Provider>
+    <ThemesContext.Provider value={{ themes, setThemes }}>
+      {children}
+    </ThemesContext.Provider>
   );
 }
 

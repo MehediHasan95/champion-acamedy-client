@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import loginPic from "../../assets/login.png";
-import registerPic from "../../assets/register.png";
+import registerPic from "../../assets/ragister.png";
 import google from "../../assets/google.png";
 import {
   faCamera,
   faEnvelope,
+  faEye,
+  faEyeSlash,
   faLock,
   faLockOpen,
   faUser,
@@ -15,6 +17,7 @@ import { useForm } from "react-hook-form";
 function Authentication() {
   const [toggle, setToggle] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [spinner, setSpinner] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
   const {
@@ -111,9 +114,13 @@ function Authentication() {
                   placeholder="Enter Password"
                 />
                 <FontAwesomeIcon
-                  onClick={() => setShowPass(!showPass)}
-                  icon={showPass ? faLockOpen : faLock}
+                  icon={faLock}
                   className="absolute top-4 left-3 cursor-pointer"
+                />
+                <FontAwesomeIcon
+                  onClick={() => setShowPass(!showPass)}
+                  icon={showPass ? faEye : faEyeSlash}
+                  className="absolute top-4 right-4 cursor-pointer text-base-300 dark:text-base-content"
                 />
                 <p className="text-red-600 text-xs">
                   {errors.pasasword && (
@@ -142,9 +149,13 @@ function Authentication() {
                     placeholder="Enter Confirm Password"
                   />
                   <FontAwesomeIcon
-                    onClick={() => setShowPass(!showPass)}
-                    icon={showPass ? faLockOpen : faLock}
+                    icon={faLock}
                     className="absolute top-4 left-3 cursor-pointer"
+                  />
+                  <FontAwesomeIcon
+                    onClick={() => setShowPass(!showPass)}
+                    icon={showPass ? faEye : faEyeSlash}
+                    className="absolute top-4 right-4 cursor-pointer text-base-300 dark:text-base-content"
                   />
                   <p className="text-red-600 text-xs">
                     {errors.confirmPassword && (
@@ -178,14 +189,30 @@ function Authentication() {
                   </p>
                 </div>
               )}
-              <div className="my-5">
+              <div className="my-5 flex">
                 <button className="bg-royalPurple hover:bg-deepRoyalPurple text-base-100 dark:text-base-content p-3 uppercase w-[49%] border-none outline-none">
-                  {toggle ? "Register" : "Login"}
+                  {toggle ? (
+                    <>
+                      {spinner ? (
+                        <span className="loading loading-bars loading-xs"></span>
+                      ) : (
+                        "Register"
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {spinner ? (
+                        <span className="loading loading-bars loading-xs"></span>
+                      ) : (
+                        "Login"
+                      )}
+                    </>
+                  )}
                 </button>
                 {toggle && (
-                  <button className="text-base-content hover:text-royalPurple hover:underline p-3 uppercase w-[49%] border-none outline-none">
+                  <p className="text-base-content hover:text-royalPurple hover:underline p-3 uppercase w-[49%] text-center cursor-pointer">
                     Forget Password?
-                  </button>
+                  </p>
                 )}
               </div>
             </form>
