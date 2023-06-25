@@ -11,14 +11,17 @@ import {
   faLockOpen,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../context/AuthProvider";
 
 function Authentication() {
   const [toggle, setToggle] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+
+  const { googleSignIn } = useContext(AuthContext);
 
   const {
     register,
@@ -28,6 +31,15 @@ function Authentication() {
 
   const onSubmit = (data) => {
     console.log(data);
+  };
+
+  const handleGooglSignIn = () => {
+    googleSignIn()
+      .then((res) => {
+        const { displayName, email, photoURL } = res.user;
+        console.log(displayName, email, photoURL);
+      })
+      .catch((err) => setErrMsg(err.code));
   };
 
   return (
@@ -228,7 +240,10 @@ function Authentication() {
 
             <div className="my-5 flex items-center">
               <p className="me-5">Login with</p>
-              <button className="border-none outline-none w-12 h-12 p-3 bg-base-300 rounded-full">
+              <button
+                onClick={handleGooglSignIn}
+                className="border-none outline-none w-12 h-12 p-3 bg-base-300 rounded-full"
+              >
                 <img src={google} alt="google" className="w-full" />
               </button>
             </div>
