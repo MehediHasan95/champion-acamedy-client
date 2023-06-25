@@ -42,8 +42,19 @@ function Authentication() {
           .then((res) => {
             updateUserProfile(displayName, photoURL)
               .then(() => {
-                console.log(res.user);
-                setSpinner(false);
+                const { uid, displayName, email, photoURL } = res.user;
+                console.log(uid, displayName, email, photoURL);
+                axios
+                  .post("http://localhost:5000/users", {
+                    uid,
+                    displayName,
+                    email,
+                    photoURL,
+                  })
+                  .then((res) => {
+                    console.log(res.data);
+                    setSpinner(false);
+                  });
               })
               .catch((err) => {
                 setErrMsg(err.code);
@@ -84,7 +95,7 @@ function Authentication() {
             photoURL,
           })
           .then((res) => {
-            console.log(res);
+            console.log(res.data);
           });
       })
       .catch((err) => setErrMsg(err.code));
