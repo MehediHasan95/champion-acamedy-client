@@ -14,6 +14,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../context/AuthProvider";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 function Authentication() {
   const [toggle, setToggle] = useState(false);
@@ -55,8 +56,9 @@ function Authentication() {
           });
       } else {
         setSpinner(false);
-        toast.error("Password didn't match");
-        console.log("not match");
+        toast.error("Password didn't match", {
+          position: "bottom-right",
+        });
       }
     } else {
       userLogIn(email, pasasword)
@@ -73,8 +75,17 @@ function Authentication() {
   const handleGooglSignIn = () => {
     googleSignIn()
       .then((res) => {
-        const { displayName, email, photoURL } = res.user;
-        console.log(displayName, email, photoURL);
+        const { uid, displayName, email, photoURL } = res.user;
+        axios
+          .post("http://localhost:5000/users", {
+            uid,
+            displayName,
+            email,
+            photoURL,
+          })
+          .then((res) => {
+            console.log(res);
+          });
       })
       .catch((err) => setErrMsg(err.code));
   };

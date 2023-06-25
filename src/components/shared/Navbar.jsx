@@ -12,7 +12,7 @@ function Navbar() {
 
   const active =
     "w-full text-left px-3 text-royalPurple font-bold mb-3 lg:mb-0";
-  const inActive = "w-full text-left px-3 mb-3 lg:mb-0 hover:text-pastelBlue";
+  const inActive = "w-full text-left px-3 mb-3 lg:mb-0 hover:text-royalPurple";
 
   const handleLogOut = () => {
     logOut()
