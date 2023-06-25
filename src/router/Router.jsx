@@ -3,6 +3,8 @@ import Root from "../layout/Root";
 import PageNotFound from "../components/utilities/PageNotFound";
 import Home from "../components/home/Home";
 import Authentication from "../components/auth/Authentication";
+import AdminDashboard from "../components/admin/AdminDashboard";
+import UserList from "../components/admin/UserList";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,16 @@ const router = createBrowserRouter([
       {
         path: "auth",
         element: <Authentication />,
+      },
+    ],
+  },
+  {
+    path: "/admin-dashboard",
+    element: <AdminDashboard />,
+    children: [
+      {
+        path: "user-list",
+        element: <UserList />,
       },
     ],
   },

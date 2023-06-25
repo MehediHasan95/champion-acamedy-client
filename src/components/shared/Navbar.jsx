@@ -38,7 +38,7 @@ function Navbar() {
       </li>
 
       <li>
-        <NavLink to="/dashboard">
+        <NavLink to="/admin-dashboard">
           {({ isActive }) => (
             <button className={isActive ? active : inActive}>Dashboard</button>
           )}

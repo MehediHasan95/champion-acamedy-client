@@ -15,22 +15,26 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../context/AuthProvider";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Authentication() {
   const [toggle, setToggle] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-
   const { googleSignIn, createUser, updateUserProfile, userLogIn } =
     useContext(AuthContext);
-
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+  const from = location?.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     const { displayName, email, pasasword, confirmPassword, photoURL, agree } =
@@ -43,7 +47,6 @@ function Authentication() {
             updateUserProfile(displayName, photoURL)
               .then(() => {
                 const { uid, displayName, email, photoURL } = res.user;
-                console.log(uid, displayName, email, photoURL);
                 axios
                   .post("http://localhost:5000/users", {
                     uid,
@@ -52,8 +55,10 @@ function Authentication() {
                     photoURL,
                   })
                   .then((res) => {
-                    console.log(res.data);
-                    setSpinner(false);
+                    if (res.data.acknowledged) {
+                      navigate(from, { replace: true });
+                      setSpinner(false);
+                    }
                   });
               })
               .catch((err) => {
@@ -95,7 +100,9 @@ function Authentication() {
             photoURL,
           })
           .then((res) => {
-            console.log(res.data);
+            if (res.data.acknowledged) {
+              navigate(from, { replace: true });
+            }
           });
       })
       .catch((err) => setErrMsg(err.code));
