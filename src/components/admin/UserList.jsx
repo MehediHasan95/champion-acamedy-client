@@ -1,12 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useUserList from "../../hooks/useUserList";
-import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faEdit,
+  faTrashAlt,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 function UserList() {
   const [allUser, refetch, isLoading] = useUserList();
-  const [roleChange, setRoleChange] = useState(false);
-  console.log(allUser, isLoading);
+  const [roleChange, setRoleChange] = useState("");
+
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <div>
@@ -29,23 +40,39 @@ function UserList() {
                   <td>{e.displayName}</td>
                   <td>{e.email}</td>
                   <td className="uppercase">
-                    {roleChange ? (
-                      <select>
-                        <option value="">Admin</option>
-                        <option value="">Instructor</option>
-                      </select>
+                    {e._id === roleChange ? (
+                      <form onSubmit={handleSubmit(onSubmit)}>
+                        <select
+                          {...register("role", { required: true })}
+                          className="p-1 border outline-none"
+                        >
+                          <option value="admin">Admin</option>
+                          <option value="instructor">Instructor</option>
+                        </select>
+                        <button className="px-2 py-1 ms-1 bg-green-600 text-white border-none outline-none">
+                          <FontAwesomeIcon icon={faCheck} />
+                        </button>
+                        <button
+                          onClick={() => setRoleChange("")}
+                          className="px-2 py-1 ms-1 bg-red-600 text-white border-none outline-none"
+                        >
+                          <FontAwesomeIcon icon={faXmark} />
+                        </button>
+                      </form>
                     ) : (
-                      <>
-                        {(e.role === "admin" && "Admin") ||
-                          (e.role === "instructor" && "Instructor") ||
-                          "User"}
-                      </>
+                      e.role
                     )}
                   </td>
                   <td className="flex justify-center space-x-5">
-                    <button>
-                      <FontAwesomeIcon icon={faEdit} />
-                    </button>
+                    {e._id === roleChange ? null : (
+                      <button>
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          onClick={() => setRoleChange(e._id)}
+                        />
+                      </button>
+                    )}
+
                     <button>
                       <FontAwesomeIcon icon={faTrashAlt} />
                     </button>

@@ -33,7 +33,6 @@ function Authentication() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
   const from = location?.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
@@ -179,15 +178,14 @@ function Authentication() {
                   type={showPass ? "text" : "password"}
                   {...register("pasasword", {
                     required: "Password is required",
-                    minLength: {
+                    maxLength: {
                       value: 6,
-                      message: "Password must be at least 6 characters long",
+                      message: "Password must be less than 6 characters long",
                     },
                     pattern: {
-                      value:
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/i,
+                      value: /^[^A-Z!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]*$/,
                       message:
-                        "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character",
+                        "Password must be contain a single digit and one uppercase letter, Don't use  uppercase letter and special character",
                     },
                   })}
                   className="w-full border border-black ps-10 py-3 focus:outline-royalPurple"
@@ -214,15 +212,14 @@ function Authentication() {
                     type={showPass ? "text" : "password"}
                     {...register("confirmPassword", {
                       required: "Password is required",
-                      minLength: {
+                      maxLength: {
                         value: 6,
-                        message: "Password must be at least 6 characters long",
+                        message: "Password must be less than 6 characters long",
                       },
                       pattern: {
-                        value:
-                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/i,
+                        value: /^[^A-Z!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]*$/,
                         message:
-                          "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character",
+                          "Password must be contain a single digit and one uppercase letter, Don't use  uppercase letter and special character",
                       },
                     })}
                     className="w-full border border-black ps-10 py-3 focus:outline-royalPurple"
