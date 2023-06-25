@@ -52,7 +52,7 @@ function Authentication() {
                     displayName,
                     email,
                     photoURL,
-                    role: "user",
+                    role: "student",
                   })
                   .then((res) => {
                     if (res.data.acknowledged) {
@@ -98,7 +98,7 @@ function Authentication() {
             displayName,
             email,
             photoURL,
-            role: "user",
+            role: "student",
           })
           .then((res) => {
             if (res.data.acknowledged) {

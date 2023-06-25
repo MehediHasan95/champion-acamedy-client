@@ -8,15 +8,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 function UserList() {
   const [allUser, refetch, isLoading] = useUserList();
   const [roleChange, setRoleChange] = useState("");
 
-  const { register, handleSubmit } = useForm();
+  const { register, reset, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    axios
+      .patch(`http://localhost:5000/users/${roleChange}`, data)
+      .then((res) => {
+        if (res.data.acknowledged) {
+          refetch();
+          setRoleChange("");
+          reset();
+          toast.success("Role change successful");
+        }
+      });
   };
 
   return (
@@ -45,7 +56,11 @@ function UserList() {
                         <select
                           {...register("role", { required: true })}
                           className="p-1 border outline-none"
+                          defaultValue={null}
                         >
+                          <option selected disabled>
+                            Select role
+                          </option>
                           <option value="admin">Admin</option>
                           <option value="instructor">Instructor</option>
                         </select>
@@ -65,12 +80,16 @@ function UserList() {
                   </td>
                   <td className="flex justify-center space-x-5">
                     {e._id === roleChange ? null : (
-                      <button>
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          onClick={() => setRoleChange(e._id)}
-                        />
-                      </button>
+                      <>
+                        {e.role !== "student" ? null : (
+                          <button>
+                            <FontAwesomeIcon
+                              icon={faEdit}
+                              onClick={() => setRoleChange(e._id)}
+                            />
+                          </button>
+                        )}
+                      </>
                     )}
 
                     <button>
