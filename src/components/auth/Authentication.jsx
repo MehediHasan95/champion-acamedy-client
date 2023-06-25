@@ -13,6 +13,7 @@ import {
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../context/AuthProvider";
+import { toast } from "react-hot-toast";
 
 function Authentication() {
   const [toggle, setToggle] = useState(false);
@@ -53,7 +54,9 @@ function Authentication() {
             setSpinner(false);
           });
       } else {
-        console.log("pass dont match");
+        setSpinner(false);
+        toast.error("Password didn't match");
+        console.log("not match");
       }
     } else {
       userLogIn(email, pasasword)
