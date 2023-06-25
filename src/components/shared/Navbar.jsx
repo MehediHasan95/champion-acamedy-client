@@ -4,13 +4,21 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useContext } from "react";
 import { ThemesContext } from "../../context/ThemesProvider";
+import { AuthContext } from "../../context/AuthProvider";
 
 function Navbar() {
   const { themes, setThemes } = useContext(ThemesContext);
+  const { user, loading, logOut } = useContext(AuthContext);
 
   const active =
     "w-full text-left px-3 text-royalPurple font-bold mb-3 lg:mb-0";
   const inActive = "w-full text-left px-3 mb-3 lg:mb-0 hover:text-pastelBlue";
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((err) => console.log(err));
+  };
 
   const navItems = (
     <>
@@ -36,12 +44,19 @@ function Navbar() {
           )}
         </NavLink>
       </li>
+
       <li>
-        <NavLink to="/auth">
-          {({ isActive }) => (
-            <button className={isActive ? active : inActive}>Login</button>
-          )}
-        </NavLink>
+        {user ? (
+          <button onClick={handleLogOut} className="px-3">
+            Logout
+          </button>
+        ) : (
+          <NavLink to="/auth">
+            {({ isActive }) => (
+              <button className={isActive ? active : inActive}>Login</button>
+            )}
+          </NavLink>
+        )}
       </li>
       <li>
         <button
@@ -52,16 +67,19 @@ function Navbar() {
           <FontAwesomeIcon icon={themes ? faSun : faMoon} className="text-xl" />
         </button>
       </li>
-      <li>
-        <div
-          className="avatar px-0 lg:px-3 tooltip tooltip-bottom hidden lg:block"
-          data-tip="Profile"
-        >
-          <div className="w-8 rounded-full">
-            <img src="" alt="profile" />
+
+      {user && (
+        <li>
+          <div
+            className="avatar px-0 lg:px-3 tooltip tooltip-left hidden lg:block"
+            data-tip={!loading && user?.displayName}
+          >
+            <div className="w-8 rounded-full">
+              <img src={!loading && user?.photoURL} alt="profile" />
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      )}
     </>
   );
 
@@ -87,7 +105,7 @@ function Navbar() {
               </svg>
             </label>
           </div>
-          <div className="flex-1 justify-between px-2 mx-2">
+          <div className="flex-1 justify-between px-2">
             <Link to="/">
               <div className="flex">
                 <img src={logo} alt="logo" className="w-8 h-8" />
@@ -96,16 +114,15 @@ function Navbar() {
                 </span>
               </div>
             </Link>
-            <div
-              className="avatar px-3 tooltip tooltip-bottom block lg:hidden"
-              data-tip="Profile"
-            >
-              <div className="w-8 rounded-full">
-                <img src="" alt="profile" />
+            {user && (
+              <div className="avatar block lg:hidden">
+                <div className="w-8 rounded-full">
+                  <img src={!loading && user?.photoURL} alt="profile" />
+                </div>
               </div>
-            </div>
+            )}
           </div>
-          <div className="flex-none hidden lg:block">
+          <div className="flex-none hidden lg:block px-5">
             <ul className="flex items-center">{navItems}</ul>
           </div>
         </div>

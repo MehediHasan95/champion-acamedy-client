@@ -8,7 +8,6 @@ import {
   faEye,
   faEyeSlash,
   faLock,
-  faLockOpen,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
@@ -21,16 +20,51 @@ function Authentication() {
   const [spinner, setSpinner] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
-  const { googleSignIn } = useContext(AuthContext);
+  const { googleSignIn, createUser, updateUserProfile, userLogIn } =
+    useContext(AuthContext);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const { displayName, email, pasasword, confirmPassword, photoURL, agree } =
+      data;
+    setSpinner(true);
+    if (agree) {
+      if (pasasword === confirmPassword) {
+        createUser(email, pasasword)
+          .then((res) => {
+            updateUserProfile(displayName, photoURL)
+              .then(() => {
+                console.log(res.user);
+                setSpinner(false);
+              })
+              .catch((err) => {
+                setErrMsg(err.code);
+                setSpinner(false);
+              });
+          })
+          .catch((err) => {
+            setErrMsg(err.code);
+            setSpinner(false);
+          });
+      } else {
+        console.log("pass dont match");
+      }
+    } else {
+      userLogIn(email, pasasword)
+        .then(() => {
+          setSpinner(false);
+        })
+        .catch((err) => {
+          setErrMsg(err.code);
+          setSpinner(false);
+        });
+    }
   };
 
   const handleGooglSignIn = () => {
@@ -177,7 +211,7 @@ function Authentication() {
                 </div>
               )}
               {toggle && (
-                <div className="relative mb-3">
+                <div className="relative">
                   <input
                     type="text"
                     {...register("photoURL", {
@@ -201,6 +235,26 @@ function Authentication() {
                   </p>
                 </div>
               )}
+
+              {toggle && (
+                <div className="my-5">
+                  <label>
+                    <input
+                      type="checkbox"
+                      {...register("agree")}
+                      className="me-2"
+                      required
+                    />
+                    <span>
+                      I have read and agree to the{" "}
+                      <span className="text-royalPurple underline cursor-pointer">
+                        terms and conditons
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              )}
+
               <div className="my-5 flex">
                 <button className="bg-royalPurple hover:bg-deepRoyalPurple text-base-100 dark:text-base-content p-3 uppercase w-[49%] border-none outline-none">
                   {toggle ? (
@@ -231,7 +285,10 @@ function Authentication() {
             <p>
               {toggle ? "Already have an account" : "Don't have an account"}
               <button
-                onClick={() => setToggle(!toggle)}
+                onClick={() => {
+                  reset();
+                  setToggle(!toggle);
+                }}
                 className="mx-2 hover:text-royalPurple underline border-none"
               >
                 {toggle ? "Login" : "Register"}
