@@ -110,7 +110,7 @@ function Navbar() {
               <div className="flex">
                 <img src={logo} alt="logo" className="w-8 h-8" />
                 <span className="font-lobster text-2xl text-royalPurple">
-                  Champion
+                  Champion<span className="text-platinum">Academy</span>
                 </span>
               </div>
             </Link>

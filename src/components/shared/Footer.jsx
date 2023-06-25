@@ -9,7 +9,7 @@ function Footer() {
           <div className="flex">
             <img src={logo} alt="logo" className="w-8 h-8" />
             <span className="font-lobster text-2xl text-base-100 dark:text-royalPurple">
-              Champion
+              Champion<span className="text-platinum">Academy</span>
             </span>
           </div>
         </Link>

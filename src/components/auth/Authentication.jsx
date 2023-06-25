@@ -53,6 +53,7 @@ function Authentication() {
                     displayName,
                     email,
                     photoURL,
+                    role: "user",
                   })
                   .then((res) => {
                     if (res.data.acknowledged) {
@@ -98,6 +99,7 @@ function Authentication() {
             displayName,
             email,
             photoURL,
+            role: "user",
           })
           .then((res) => {
             if (res.data.acknowledged) {
