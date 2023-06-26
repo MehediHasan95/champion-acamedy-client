@@ -14,7 +14,6 @@ import { enqueueSnackbar } from "notistack";
 function ManageUsers() {
   const [allUser, refetch, isLoading] = useUserList();
   const [roleChange, setRoleChange] = useState("");
-
   const { register, reset, handleSubmit } = useForm();
 
   const onSubmit = (data) => {

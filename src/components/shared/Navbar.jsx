@@ -1,14 +1,23 @@
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useContext } from "react";
 import { ThemesContext } from "../../context/ThemesProvider";
 import { AuthContext } from "../../context/AuthProvider";
+import useRole from "../../hooks/useRole";
+import { enqueueSnackbar } from "notistack";
 
 function Navbar() {
   const { themes, setThemes } = useContext(ThemesContext);
   const { user, loading, logOut } = useContext(AuthContext);
+  const [role, isLoading] = useRole();
+
+  console.log(role, isLoading);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location?.state?.from?.pathname || "/";
 
   const active =
     "w-full text-left px-3 text-royalPurple font-bold mb-3 lg:mb-0";
@@ -16,8 +25,15 @@ function Navbar() {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
-      .catch((err) => console.log(err));
+      .then(() => {
+        navigate(from, { replace: true });
+      })
+      .catch((err) =>
+        enqueueSnackbar(err.code, {
+          variant: "success",
+          autoHideDuration: 3000,
+        })
+      );
   };
 
   const navItems = (
@@ -47,7 +63,10 @@ function Navbar() {
 
       <li>
         {user ? (
-          <button onClick={handleLogOut} className="px-3">
+          <button
+            onClick={handleLogOut}
+            className="px-3 hover:text-royalPurple"
+          >
             Logout
           </button>
         ) : (

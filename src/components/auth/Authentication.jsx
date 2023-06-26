@@ -80,6 +80,7 @@ function Authentication() {
     } else {
       userLogIn(email, pasasword)
         .then(() => {
+          navigate(from, { replace: true });
           setSpinner(false);
         })
         .catch((err) => {
