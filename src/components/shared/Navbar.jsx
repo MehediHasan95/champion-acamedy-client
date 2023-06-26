@@ -13,8 +13,6 @@ function Navbar() {
   const { user, loading, logOut } = useContext(AuthContext);
   const [role, isLoading] = useRole();
 
-  console.log(role, isLoading);
-
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
@@ -53,13 +51,27 @@ function Navbar() {
         </NavLink>
       </li>
 
-      <li>
-        <NavLink to="/admin-dashboard/manage-users">
-          {({ isActive }) => (
-            <button className={isActive ? active : inActive}>Dashboard</button>
+      {user && (
+        <li>
+          {!isLoading && role?.role === "admin" ? (
+            <NavLink to="/admin-dashboard/manage-users">
+              {({ isActive }) => (
+                <button className={isActive ? active : inActive}>
+                  Dashboard
+                </button>
+              )}
+            </NavLink>
+          ) : (
+            <NavLink to="/dashboard">
+              {({ isActive }) => (
+                <button className={isActive ? active : inActive}>
+                  Dashboard
+                </button>
+              )}
+            </NavLink>
           )}
-        </NavLink>
-      </li>
+        </li>
+      )}
 
       <li>
         {user ? (

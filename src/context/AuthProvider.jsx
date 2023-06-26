@@ -24,12 +24,12 @@ function AuthProvider({ children }) {
           .post("http://localhost:5000/jwt", { uid: result.uid })
           .then((res) => {
             localStorage.setItem("access-token", res.data.token);
+            setLoading(false);
           });
       } else {
         localStorage.removeItem("access-token");
       }
       setUser(result);
-      setLoading(false);
     });
     return () => unsubscribe();
   }, []);

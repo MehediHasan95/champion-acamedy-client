@@ -6,6 +6,9 @@ import Authentication from "../components/auth/Authentication";
 import AdminDashboard from "../components/admin/AdminDashboard";
 import ManageUsers from "../components/admin/ManageUsers";
 import ManageClasses from "../components/admin/ManageClasses";
+import Dashboard from "../components/home/Dashboard";
+import PrivateRouter from "./PrivateRouter";
+import PrivateAdminRouter from "./PrivateAdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,14 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "dashboard",
+        element: (
+          <PrivateRouter>
+            <Dashboard />
+          </PrivateRouter>
+        ),
+      },
+      {
         path: "auth",
         element: <Authentication />,
       },
@@ -25,7 +36,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin-dashboard",
-    element: <AdminDashboard />,
+    element: (
+      <PrivateAdminRouter>
+        <AdminDashboard />
+      </PrivateAdminRouter>
+    ),
     children: [
       {
         path: "manage-users",

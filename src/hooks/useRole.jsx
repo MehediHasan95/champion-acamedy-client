@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import useAxiosSecure from "./useAxiosSecure";
@@ -16,7 +15,6 @@ function useRole() {
       return res.data;
     },
   });
-
   return [role, isLoading];
 }
 

@@ -1,15 +1,16 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import useRole from "../hooks/useRole";
 import { Oval } from "react-loader-spinner";
 
-function PrivateRouter({ children }) {
+function PrivateAdminRouter({ children }) {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
-
-  if (loading) {
+  const [role, isLoading] = useRole();
+  if (loading || isLoading) {
     return (
-      <div>
+      <div className="min-h-screen grid place-items-center">
         <Oval
           height={50}
           width={50}
@@ -22,11 +23,11 @@ function PrivateRouter({ children }) {
         />
       </div>
     );
-  } else if (user) {
+  } else if (user || role.role === "admin") {
     return children;
   } else {
-    return <Navigate to="/auth" state={{ from: location }} replace />;
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 }
 
-export default PrivateRouter;
+export default PrivateAdminRouter;
