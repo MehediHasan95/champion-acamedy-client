@@ -13,9 +13,9 @@ import {
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../context/AuthProvider";
-import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 function Authentication() {
   const [toggle, setToggle] = useState(false);
@@ -72,8 +72,9 @@ function Authentication() {
           });
       } else {
         setSpinner(false);
-        toast.error("Password didn't match", {
-          position: "bottom-right",
+        enqueueSnackbar("Password didn't match", {
+          variant: "error",
+          autoHideDuration: 3000,
         });
       }
     } else {

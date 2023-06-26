@@ -9,9 +9,9 @@ import {
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { enqueueSnackbar } from "notistack";
 
-function UserList() {
+function ManageUsers() {
   const [allUser, refetch, isLoading] = useUserList();
   const [roleChange, setRoleChange] = useState("");
 
@@ -25,14 +25,33 @@ function UserList() {
           refetch();
           setRoleChange("");
           reset();
-          toast.success("Role change successful");
+          enqueueSnackbar("Role change successful", {
+            variant: "success",
+            autoHideDuration: 3000,
+          });
         }
+      });
+  };
+
+  const handleDeleteUser = (e) => {
+    axios
+      .delete(`http://localhost:5000/users?id=${e._id}&uid=${e.uid}`)
+      .then((res) => {
+        const { message } = res.data;
+        refetch();
+        enqueueSnackbar(message || "User has been deleted successfully", {
+          variant: message ? "error" : "success",
+          autoHideDuration: 3000,
+        });
       });
   };
 
   return (
     <div>
-      <div className="overflow-x-auto border border-base-200">
+      <div className="overflow-x-auto p-3">
+        <div className="my-3">
+          <h1>Manage all users information</h1>
+        </div>
         <table className="table text-center">
           <thead className="bg-royalPurple text-white">
             <tr>
@@ -43,7 +62,7 @@ function UserList() {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="border">
             {!isLoading &&
               allUser.map((e, index) => (
                 <tr key={e._id}>
@@ -78,21 +97,26 @@ function UserList() {
                       e.role
                     )}
                   </td>
-                  <td className="flex justify-center space-x-5">
+                  <td className="flex justify-center space-x-3">
                     {e._id === roleChange ? null : (
                       <>
                         {e.role !== "student" ? null : (
-                          <button>
-                            <FontAwesomeIcon
-                              icon={faEdit}
-                              onClick={() => setRoleChange(e._id)}
-                            />
+                          <button
+                            onClick={() => setRoleChange(e._id)}
+                            className="bg-yellow-400 text-white px-2 py-1 tooltip"
+                            data-tip="Edit"
+                          >
+                            <FontAwesomeIcon icon={faEdit} />
                           </button>
                         )}
                       </>
                     )}
 
-                    <button>
+                    <button
+                      onClick={() => handleDeleteUser(e)}
+                      className="bg-platinum text-white px-2 py-1 tooltip"
+                      data-tip="Delete"
+                    >
                       <FontAwesomeIcon icon={faTrashAlt} />
                     </button>
                   </td>
@@ -105,4 +129,4 @@ function UserList() {
   );
 }
 
-export default UserList;
+export default ManageUsers;

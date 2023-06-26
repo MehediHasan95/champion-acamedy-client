@@ -1,4 +1,8 @@
-import { faHome, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChalkboardUser,
+  faHome,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
@@ -8,14 +12,15 @@ import logo from "../../assets/logo.png";
 function AdminDashboard() {
   const { user } = useContext(AuthContext);
 
-  const active = "w-full p-1 mb-2 text-left text-royalPurple font-bold";
+  const active =
+    "w-full p-1 mb-2 text-left text-royalPurple bg-base-100 bg-opacity-50 font-bold";
   const inActive = "w-full p-1 mb-2 text-left";
   return (
     <div>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
-          <div className="p-1 flex items-center">
+          <div className="flex items-center bg-royalPurple dark:bg-base-300 text-base-100 dark:text-base-content">
             <label
               htmlFor="my-drawer-2"
               className="btn btn-square btn-ghost lg:hidden"
@@ -34,7 +39,7 @@ function AdminDashboard() {
                 ></path>
               </svg>
             </label>
-            <div className="w-full flex justify-between items-center p-2 lg:p-5">
+            <div className="w-full flex justify-between items-center py-2 px-4">
               <h1>
                 Welcome back! <br />
                 <small>{user && user?.displayName}, Good morning</small>
@@ -55,29 +60,30 @@ function AdminDashboard() {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="p-4 w-80 h-full bg-base-200 text-base-content">
+          <ul className="p-4 w-80 h-full bg-royalPurple dark:bg-base-300 text-base-100 dark:text-base-content">
             <div className="flex justify-center py-5">
               <img src={logo} alt="logo" className="w-8 h-8" />
-              <span className="font-lobster text-2xl text-royalPurple">
+              <span className="font-lobster text-2xl text-base-100 dark:text-royalPurple">
                 Champion<span className="text-platinum">Academy</span>
               </span>
             </div>
 
             <li>
-              <NavLink to="user-list">
+              <NavLink to="manage-users">
                 {({ isActive }) => (
                   <button className={isActive ? active : inActive}>
                     <FontAwesomeIcon icon={faUsers} className="px-3" />
-                    User List
+                    Manage Users
                   </button>
                 )}
               </NavLink>
             </li>
             <li>
-              <NavLink to="use">
+              <NavLink to="manage-classes">
                 {({ isActive }) => (
                   <button className={isActive ? active : inActive}>
-                    User List
+                    <FontAwesomeIcon icon={faChalkboardUser} className="px-3" />
+                    Manage Classes
                   </button>
                 )}
               </NavLink>

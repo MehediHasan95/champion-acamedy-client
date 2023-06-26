@@ -4,7 +4,8 @@ import PageNotFound from "../components/utilities/PageNotFound";
 import Home from "../components/home/Home";
 import Authentication from "../components/auth/Authentication";
 import AdminDashboard from "../components/admin/AdminDashboard";
-import UserList from "../components/admin/UserList";
+import ManageUsers from "../components/admin/ManageUsers";
+import ManageClasses from "../components/admin/ManageClasses";
 
 const router = createBrowserRouter([
   {
@@ -27,8 +28,12 @@ const router = createBrowserRouter([
     element: <AdminDashboard />,
     children: [
       {
-        path: "user-list",
-        element: <UserList />,
+        path: "manage-users",
+        element: <ManageUsers />,
+      },
+      {
+        path: "manage-classes",
+        element: <ManageClasses />,
       },
     ],
   },
