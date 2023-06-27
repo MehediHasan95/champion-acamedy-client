@@ -13,7 +13,8 @@ function Footer() {
             </span>
           </div>
         </Link>
-        Copyright © 2023 - All right reserved
+        18 Gulshan Avenue, Dhaka, Bangladesh <br /> Copyright © 2023 - All right
+        reserved
       </div>
       <div>
         <span className="footer-title">Services</span>

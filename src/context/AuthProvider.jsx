@@ -10,12 +10,14 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebaseSetup.js";
 import axios from "axios";
+import moment from "moment/moment.js";
 
 export const AuthContext = createContext(null);
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const create = moment().format("MMMM Do YYYY, h:mm:ss a");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (result) => {
@@ -61,6 +63,7 @@ function AuthProvider({ children }) {
         updateUserProfile,
         userLogIn,
         logOut,
+        create,
       }}
     >
       {children}

@@ -16,14 +16,14 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import useAuth from "../../hooks/useAuth";
-import moment from "moment/moment";
 
 function Authentication() {
   const [toggle, setToggle] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const { googleSignIn, createUser, updateUserProfile, userLogIn } = useAuth();
+  const { googleSignIn, createUser, updateUserProfile, userLogIn, create } =
+    useAuth();
   const {
     register,
     handleSubmit,
@@ -34,8 +34,6 @@ function Authentication() {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
-
-  const create = moment().format("MMMM Do YYYY, h:mm:ss a");
 
   const onSubmit = (data) => {
     const { displayName, email, pasasword, confirmPassword, photoURL, agree } =

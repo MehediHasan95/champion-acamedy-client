@@ -3,7 +3,6 @@ import useRole from "../../hooks/useRole";
 
 function Dashboard() {
   const [role, isLoading] = useRole();
-  console.log(role, isLoading);
 
   const active = "tab tab-bordered tab-active";
   const inActive = "tab tab-bordered";
