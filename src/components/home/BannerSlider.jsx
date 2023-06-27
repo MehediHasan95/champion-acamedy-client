@@ -44,14 +44,16 @@ function BannerSlider() {
         transitionTime={800}
       >
         {data.map((e, index) => (
-          <div key={index} className="min-h-90 grid grid-cols-2">
+          <div key={index} className="min-h-90 grid grid-cols-2 p-5">
             <div className="col-span-1 grid place-items-center text-left">
               <div className="lg:w-3/4">
-                <h1 className="font-dmSerif text-3xl md:text-5xl lg:text-7xl font-bold">
+                <h1 className="font-dmSerif text-xl md:text-5xl lg:text-7xl font-bold">
                   {e.title}
                 </h1>
-                <p className="my-3">{e.quotes}</p>
-                <button className="w-1/2 lg:w-1/5 p-2 bg-royalPurple hover:bg-deepRoyalPurple text-base-100 dark:text-base-content">
+                <p className="my-3 text-xs  md:text-base lg:text-base">
+                  {e.quotes}
+                </p>
+                <button className="w-1/2 lg:w-1/5 py-2 bg-royalPurple hover:bg-deepRoyalPurple text-base-100 dark:text-base-content">
                   Get Started
                 </button>
               </div>

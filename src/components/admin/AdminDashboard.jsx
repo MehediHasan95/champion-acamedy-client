@@ -4,13 +4,12 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { AuthContext } from "../../context/AuthProvider";
 import logo from "../../assets/logo.png";
+import useAuth from "../../hooks/useAuth";
 
 function AdminDashboard() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const active =
     "w-full p-1 mb-2 text-left text-royalPurple bg-base-100 bg-opacity-50 font-bold";

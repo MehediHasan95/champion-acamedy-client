@@ -4,13 +4,13 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useContext } from "react";
 import { ThemesContext } from "../../context/ThemesProvider";
-import { AuthContext } from "../../context/AuthProvider";
 import useRole from "../../hooks/useRole";
 import { enqueueSnackbar } from "notistack";
+import useAuth from "../../hooks/useAuth";
 
 function Navbar() {
-  const { themes, setThemes } = useContext(ThemesContext);
-  const { user, loading, logOut } = useContext(AuthContext);
+  const { themeChange, setThemeChange } = useContext(ThemesContext);
+  const { user, loading, logOut } = useAuth();
   const [role, isLoading] = useRole();
 
   const location = useLocation();
@@ -91,11 +91,14 @@ function Navbar() {
       </li>
       <li>
         <button
-          onClick={() => setThemes(!themes)}
+          onClick={() => setThemeChange(!themeChange)}
           className="px-3 tooltip tooltip-bottom"
-          data-tip={themes ? "Dark Mode" : "Light Mode"}
+          data-tip={themeChange ? "Dark Mode" : "Light Mode"}
         >
-          <FontAwesomeIcon icon={themes ? faSun : faMoon} className="text-xl" />
+          <FontAwesomeIcon
+            icon={themeChange ? faSun : faMoon}
+            className="text-xl"
+          />
         </button>
       </li>
 
@@ -146,11 +149,16 @@ function Navbar() {
               </div>
             </Link>
             {user && (
-              <div className="avatar block lg:hidden">
-                <div className="w-8 rounded-full">
-                  <img src={!loading && user?.photoURL} alt="profile" />
+              <label
+                htmlFor="my-drawer-2"
+                className="drawer-button lg:hidden cursor-pointer"
+              >
+                <div className="avatar block lg:hidden">
+                  <div className="w-8 rounded-full">
+                    <img src={!loading && user?.photoURL} alt="profile" />
+                  </div>
                 </div>
-              </div>
+              </label>
             )}
           </div>
           <div className="flex-none hidden lg:block px-5">

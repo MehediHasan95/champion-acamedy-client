@@ -10,20 +10,19 @@ import {
   faLock,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../context/AuthProvider";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
+import useAuth from "../../hooks/useAuth";
 
 function Authentication() {
   const [toggle, setToggle] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const { googleSignIn, createUser, updateUserProfile, userLogIn } =
-    useContext(AuthContext);
+  const { googleSignIn, createUser, updateUserProfile, userLogIn } = useAuth();
   const {
     register,
     handleSubmit,

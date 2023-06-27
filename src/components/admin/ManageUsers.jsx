@@ -3,22 +3,28 @@ import useUserList from "../../hooks/useUserList";
 import {
   faCheck,
   faEdit,
+  faSpinner,
   faTrashAlt,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { enqueueSnackbar } from "notistack";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 function ManageUsers() {
   const [allUser, refetch, isLoading] = useUserList();
   const [roleChange, setRoleChange] = useState("");
+  const [loader, setLoader] = useState(false);
+  const [deleteUser, setDeleteUser] = useState("");
   const { register, reset, handleSubmit } = useForm();
+  const [instance] = useAxiosSecure();
+  const { user } = useAuth();
 
   const onSubmit = (data) => {
-    axios
-      .patch(`http://localhost:5000/users/${roleChange}`, data)
+    instance
+      .patch(`/users/${roleChange}?uid=${user?.uid}`, data)
       .then((res) => {
         if (res.data.acknowledged) {
           refetch();
@@ -33,11 +39,15 @@ function ManageUsers() {
   };
 
   const handleDeleteUser = (e) => {
-    axios
-      .delete(`http://localhost:5000/users?id=${e._id}&uid=${e.uid}`)
+    setLoader(true);
+    setDeleteUser(e._id);
+    instance
+      .delete(`/users?uid=${user?.uid}&id=${e._id}&did=${e.uid}`)
       .then((res) => {
         const { message } = res.data;
         refetch();
+        setDeleteUser("");
+        setLoader(false);
         enqueueSnackbar(message || "User has been deleted successfully", {
           variant: message ? "error" : "success",
           autoHideDuration: 3000,
@@ -61,7 +71,7 @@ function ManageUsers() {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody className="border">
+          <tbody className="border dark:border-base-300">
             {!isLoading &&
               allUser.map((e, index) => (
                 <tr key={e._id}>
@@ -116,7 +126,20 @@ function ManageUsers() {
                       className="bg-platinum text-white px-2 py-1 tooltip"
                       data-tip="Delete"
                     >
-                      <FontAwesomeIcon icon={faTrashAlt} />
+                      {deleteUser === e._id ? (
+                        <>
+                          {loader ? (
+                            <FontAwesomeIcon
+                              icon={faSpinner}
+                              className="animate-spin"
+                            />
+                          ) : (
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                          )}
+                        </>
+                      ) : (
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                      )}
                     </button>
                   </td>
                 </tr>
