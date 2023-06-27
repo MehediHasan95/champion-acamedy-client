@@ -12,6 +12,7 @@ import PrivateAdminRouter from "./PrivateAdminRoute";
 import AddClass from "../components/instructor/AddClass";
 import MyClass from "../components/instructor/MyClass";
 import InstructorProfile from "../components/instructor/InstructorProfile";
+import Classes from "../components/home/Classes";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "classes",
+        element: <Classes />,
       },
       {
         path: "dashboard",

@@ -43,6 +43,8 @@ function AddClass() {
         if (res.data.success) {
           instance
             .post(`/add-class?uid=${user?.uid}`, {
+              uid: user?.uid,
+              instructorImage: user?.photoURL,
               courseName,
               price: parseFloat(price),
               seats: parseFloat(seats),
