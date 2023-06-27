@@ -5,6 +5,7 @@ import {
   faEdit,
   faSpinner,
   faTrashAlt,
+  faUserShield,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -67,6 +68,7 @@ function ManageUsers() {
               <th>SL</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Create</th>
               <th>Role</th>
               <th>Action</th>
             </tr>
@@ -78,6 +80,7 @@ function ManageUsers() {
                   <th>{index + 1}</th>
                   <td>{e.displayName}</td>
                   <td>{e.email}</td>
+                  <td>{e.create}</td>
                   <td className="uppercase">
                     {e._id === roleChange ? (
                       <form onSubmit={handleSubmit(onSubmit)}>
@@ -121,26 +124,33 @@ function ManageUsers() {
                       </>
                     )}
 
-                    <button
-                      onClick={() => handleDeleteUser(e)}
-                      className="bg-platinum text-white px-2 py-1 tooltip"
-                      data-tip="Delete"
-                    >
-                      {deleteUser === e._id ? (
-                        <>
-                          {loader ? (
-                            <FontAwesomeIcon
-                              icon={faSpinner}
-                              className="animate-spin"
-                            />
-                          ) : (
-                            <FontAwesomeIcon icon={faTrashAlt} />
-                          )}
-                        </>
-                      ) : (
-                        <FontAwesomeIcon icon={faTrashAlt} />
-                      )}
-                    </button>
+                    {e.role === "admin" ? (
+                      <FontAwesomeIcon
+                        icon={faUserShield}
+                        className="text-royalPurple"
+                      />
+                    ) : (
+                      <button
+                        onClick={() => handleDeleteUser(e)}
+                        className="bg-platinum text-white px-2 py-1 tooltip"
+                        data-tip="Delete"
+                      >
+                        {deleteUser === e._id ? (
+                          <>
+                            {loader ? (
+                              <FontAwesomeIcon
+                                icon={faSpinner}
+                                className="animate-spin"
+                              />
+                            ) : (
+                              <FontAwesomeIcon icon={faTrashAlt} />
+                            )}
+                          </>
+                        ) : (
+                          <FontAwesomeIcon icon={faTrashAlt} />
+                        )}
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

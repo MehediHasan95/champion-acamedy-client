@@ -16,6 +16,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import useAuth from "../../hooks/useAuth";
+import moment from "moment/moment";
 
 function Authentication() {
   const [toggle, setToggle] = useState(false);
@@ -33,6 +34,8 @@ function Authentication() {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
+
+  const create = moment().format("MMMM Do YYYY, h:mm:ss a");
 
   const onSubmit = (data) => {
     const { displayName, email, pasasword, confirmPassword, photoURL, agree } =
@@ -52,6 +55,7 @@ function Authentication() {
                     email,
                     photoURL,
                     role: "student",
+                    create,
                   })
                   .then((res) => {
                     if (res.data.acknowledged) {
@@ -90,28 +94,27 @@ function Authentication() {
   };
 
   const handleGooglSignIn = () => {
-    googleSignIn()
-      .then((res) => {
-        const { uid, displayName, email, photoURL } = res.user;
-        axios
-          .post("http://localhost:5000/users", {
-            uid,
-            displayName,
-            email,
-            photoURL,
-            role: "student",
-          })
-          .then((res) => {
-            if (res.data.acknowledged) {
-              navigate(from, { replace: true });
-            }
-          });
-      })
-      .catch((err) => setErrMsg(err.code));
+    googleSignIn().then((res) => {
+      const { uid, displayName, email, photoURL } = res.user;
+      axios
+        .post("http://localhost:5000/users", {
+          uid,
+          displayName,
+          email,
+          photoURL,
+          role: "student",
+          create,
+        })
+        .then((res) => {
+          if (res.data.acknowledged) {
+            navigate(from, { replace: true });
+          }
+        });
+    });
   };
 
   return (
-    <div className="min-h-[80vh] grid place-items-center">
+    <div className="min-h-75 grid place-items-center">
       <div className="grid lg:grid-cols-2 w-full">
         <div className="col-span-1 hidden lg:block">
           <img

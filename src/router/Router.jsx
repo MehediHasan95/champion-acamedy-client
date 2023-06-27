@@ -9,6 +9,9 @@ import ManageClasses from "../components/admin/ManageClasses";
 import Dashboard from "../components/home/Dashboard";
 import PrivateRouter from "./PrivateRouter";
 import PrivateAdminRouter from "./PrivateAdminRoute";
+import AddClass from "../components/instructor/AddClass";
+import MyClass from "../components/instructor/MyClass";
+import InstructorProfile from "../components/instructor/InstructorProfile";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +30,20 @@ const router = createBrowserRouter([
             <Dashboard />
           </PrivateRouter>
         ),
-        children: [{}],
+        children: [
+          {
+            path: "addclass",
+            element: <AddClass />,
+          },
+          {
+            path: "myclass",
+            element: <MyClass />,
+          },
+          {
+            path: "instructor-profile",
+            element: <InstructorProfile />,
+          },
+        ],
       },
       {
         path: "auth",

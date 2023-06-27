@@ -1,37 +1,70 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
 
 function Dashboard() {
   const [role, isLoading] = useRole();
   console.log(role, isLoading);
 
-  const active =
-    "w-full text-left px-3 text-royalPurple font-bold mb-3 lg:mb-0";
-  const inActive = "w-full text-left px-3 mb-3 lg:mb-0 hover:text-royalPurple";
+  const active = "tab tab-bordered tab-active";
+  const inActive = "tab tab-bordered";
 
   return (
-    <div>
-      <div className="drawer lg:drawer-open">
-        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content absolute left-0">
-          <h1>Local host</h1>
+    <div className="min-h-75">
+      <div className="flex flex-col w-full">
+        <div className="grid h-20 place-items-center uppercase text-xl font-semibold text-royalPurple">
+          <span className="border-b-4 border-royalPurple px-2">
+            {!isLoading && role.role} Dashboard
+          </span>
         </div>
-        <div className="drawer-side">
-          <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="p-4 w-80 h-full bg-base-300 text-base-content">
-            <li>
-              <NavLink to="/dashboard">
-                {({ isActive }) => (
-                  <button className={isActive ? active : inActive}>
-                    Dashboard
-                  </button>
-                )}
-              </NavLink>
-            </li>
-            <li>
-              <a>Sidebar Item 2</a>
-            </li>
-          </ul>
+
+        <div className="grid h-20 place-items-center">
+          <div className="tabs">
+            {!isLoading && role?.role === "student" ? (
+              <>
+                <NavLink to="myselectedclass">
+                  {({ isActive }) => (
+                    <button className={isActive ? active : inActive}>
+                      My Selected Class
+                    </button>
+                  )}
+                </NavLink>
+                <NavLink to="payment">
+                  {({ isActive }) => (
+                    <button className={isActive ? active : inActive}>
+                      Payment
+                    </button>
+                  )}
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink to="addclass">
+                  {({ isActive }) => (
+                    <button className={isActive ? active : inActive}>
+                      Add a Class
+                    </button>
+                  )}
+                </NavLink>
+                <NavLink to="myclass">
+                  {({ isActive }) => (
+                    <button className={isActive ? active : inActive}>
+                      My Class
+                    </button>
+                  )}
+                </NavLink>
+                <NavLink to="instructor-profile">
+                  {({ isActive }) => (
+                    <button className={isActive ? active : inActive}>
+                      Profile
+                    </button>
+                  )}
+                </NavLink>
+              </>
+            )}
+          </div>
+          <div className="border">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>
