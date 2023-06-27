@@ -11,13 +11,13 @@ function Dashboard() {
   return (
     <div className="min-h-75">
       <div className="flex flex-col w-full">
-        <div className="grid h-20 place-items-center uppercase text-xl font-semibold text-royalPurple">
+        <div className="grid py-10 place-items-center uppercase text-xl font-semibold text-royalPurple">
           <span className="border-b-4 border-royalPurple px-2">
             {!isLoading && role.role} Dashboard
           </span>
         </div>
 
-        <div className="grid h-20 place-items-center">
+        <div className="grid place-items-center">
           <div className="tabs">
             {!isLoading && role?.role === "student" ? (
               <>
@@ -62,7 +62,7 @@ function Dashboard() {
               </>
             )}
           </div>
-          <div className="border">
+          <div className="w-full">
             <Outlet />
           </div>
         </div>
