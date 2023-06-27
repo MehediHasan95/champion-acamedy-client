@@ -1,16 +1,24 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { enqueueSnackbar } from "notistack";
+import { useState } from "react";
 
 function AddClass() {
   const { user, create } = useAuth();
+  const [instance] = useAxiosSecure();
+  const [loader, setLoader] = useState(false);
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
+    setLoader(true);
     const {
       courseName,
       price,
@@ -33,11 +41,35 @@ function AddClass() {
       .then((res) => {
         const { display_url } = res.data.data;
         if (res.data.success) {
-          axios.post(`http://localhost:5000/`, {});
+          instance
+            .post(`/add-class?uid=${user?.uid}`, {
+              courseName,
+              price: parseFloat(price),
+              seats: parseFloat(seats),
+              image: display_url,
+              description,
+              instructorName,
+              instructorEmail,
+              create,
+            })
+            .then((res) => {
+              if (res.data.acknowledged) {
+                setLoader(false);
+                reset();
+                enqueueSnackbar("Your class has been successfully added", {
+                  variant: "success",
+                  autoHideDuration: 3000,
+                });
+              }
+            });
         }
       })
       .catch((err) => {
-        console.log(err);
+        setLoader(false);
+        enqueueSnackbar(err.message, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
       });
   };
 
@@ -173,8 +205,12 @@ function AddClass() {
               )}
             </p>
           </div>
-          <button className="w-full p-3 border-none outline-none bg-royalPurple text-white">
-            Add Class
+          <button className="w-full p-3 border-none outline-none bg-royalPurple text-white uppercase">
+            {loader ? (
+              <span className="loading loading-spinner loading-xs"></span>
+            ) : (
+              "Add Class"
+            )}
           </button>
         </form>
       </div>
