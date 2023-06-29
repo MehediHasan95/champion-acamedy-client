@@ -62,7 +62,7 @@ function Navbar() {
               )}
             </NavLink>
           ) : (
-            <NavLink to="/dashboard">
+            <NavLink to="/dashboard/myclass">
               {({ isActive }) => (
                 <button className={isActive ? active : inActive}>
                   Dashboard
