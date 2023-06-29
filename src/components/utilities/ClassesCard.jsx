@@ -6,7 +6,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ClassesCard({ allClasses }) {
-  console.log(allClasses);
   const {
     courseName,
     image,
@@ -60,7 +59,7 @@ function ClassesCard({ allClasses }) {
             {seats}
           </p>
         </div>
-        <button className="bg-royalPurple text-white w-full py-1">
+        <button className="border border-royalPurple hover:bg-royalPurple hover:text-white w-full py-1">
           <FontAwesomeIcon icon={faShoppingBasket} className="me-2" />
           Add to Cart
         </button>
