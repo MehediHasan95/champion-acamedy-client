@@ -3,7 +3,6 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useManageClasses from "../../hooks/useManageClasses";
 import {
-  faCheck,
   faCircleCheck,
   faSpinner,
   faTrashAlt,
@@ -28,7 +27,6 @@ function ManageClasses() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     instance
       .patch(`/manage-classes/${statusId}?uid=${user?.uid}`, data)
       .then((res) => {
@@ -202,19 +200,21 @@ function ManageClasses() {
                   className="w-full p-3 mb-2 border outline-none"
                   placeholder="Status"
                 />
-                <textarea
-                  rows="5"
-                  {...register("action", {
-                    required: "This field is required",
-                    pattern: {
-                      value:
-                        /^[a-zA-Z0-9\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{20,}$/g,
-                      message: "At least 20 words should be written",
-                    },
-                  })}
-                  className="w-full p-3 border outline-none"
-                  placeholder={`Write the ${status} reason`}
-                />
+                {status === "deny" && (
+                  <textarea
+                    rows="5"
+                    {...register("feedback", {
+                      required: "This field is required",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{20,}$/g,
+                        message: "At least 20 words should be written",
+                      },
+                    })}
+                    className="w-full p-3 border outline-none"
+                    placeholder={`Write the ${status} reason`}
+                  />
+                )}
                 <p className="text-red-600 text-xs">
                   {errors.action && <span>{errors?.action?.message}</span>}
                 </p>
