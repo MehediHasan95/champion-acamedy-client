@@ -18,7 +18,6 @@ function MyClasses() {
       return res.data;
     },
   });
-  console.log(myClasses);
   return [myClasses, refetch, isLoading];
 }
 

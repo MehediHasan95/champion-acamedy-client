@@ -53,6 +53,8 @@ function AddClass() {
               instructorName,
               instructorEmail,
               create,
+              status: null,
+              feedback: null,
             })
             .then((res) => {
               if (res.data.acknowledged) {
