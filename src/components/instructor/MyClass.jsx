@@ -45,9 +45,17 @@ function MyClass() {
                   </td>
                   <td>
                     {e.status ? (
-                      e.status
+                      <button
+                        className={`btn-xs uppercase text-white ${
+                          e.status === "approve"
+                            ? "bg-green-500"
+                            : "bg-amber-500"
+                        }`}
+                      >
+                        {e.status}
+                      </button>
                     ) : (
-                      <button className="btn-xs bg-platinum text-white">
+                      <button className="btn-xs bg-platinum text-white uppercase">
                         Pending
                       </button>
                     )}

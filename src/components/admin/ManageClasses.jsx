@@ -2,7 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useManageClasses from "../../hooks/useManageClasses";
-import { faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faCircleCheck,
+  faSpinner,
+  faTrashAlt,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SnackbarSuccess } from "../utilities/Snackbar";
@@ -12,7 +18,7 @@ function ManageClasses() {
   const { user } = useAuth();
   const [instance] = useAxiosSecure();
   const [status, setStatus] = useState("");
-  const [feedback, setFeedback] = useState("");
+  const [statusId, setStatusId] = useState("");
 
   const {
     register,
@@ -21,15 +27,17 @@ function ManageClasses() {
     formState: { errors },
   } = useForm();
 
-  const handleStatusUpdate = (_id) => {};
-
   const onSubmit = (data) => {
+    console.log(data);
     instance
-      .patch(`/manage-classes/${feedback._id}?uid=${user?.uid}`, data)
+      .patch(`/manage-classes/${statusId}?uid=${user?.uid}`, data)
       .then((res) => {
+        console.log(res.data);
         if (res.data.matchedCount > 0) {
           refetch();
           reset();
+          setStatusId("");
+          setStatus("");
           SnackbarSuccess("Feedback send success");
         }
       });
@@ -60,6 +68,7 @@ function ManageClasses() {
                 <th>Price</th>
                 <th>Status</th>
                 <th>Action</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody className="border dark:border-base-300">
@@ -79,40 +88,83 @@ function ManageClasses() {
                     <td>{e.seats}</td>
                     <td>${e.price}</td>
                     <th>
-                      <button className="btn-xs uppercase">
-                        {e.status ? e.status : "Pending"}
-                      </button>
+                      {e.status ? (
+                        <button
+                          className={`btn-xs uppercase ${
+                            e.status === "approve"
+                              ? "text-green-500"
+                              : "text-amber-500"
+                          }`}
+                        >
+                          {e.status}
+                        </button>
+                      ) : (
+                        <button className="btn-xs text-red-500 uppercase">
+                          Pending
+                        </button>
+                      )}
                     </th>
                     <td>
                       <button
                         onClick={() => {
                           setStatus("approve");
-                          handleStatusUpdate(e._id);
+                          setStatusId(e._id);
                         }}
-                        className="btn-xs bg-green-500 hover:bg-green-600 text-white mx-1"
+                        disabled={
+                          e.status === "approve" ||
+                          (e.status === "deny" && true)
+                        }
+                        className={`text-white uppercase mx-1 ${
+                          e.status === "approve" || e.status === "deny"
+                            ? "bg-gray-400"
+                            : "bg-green-500 hover:bg-green-600"
+                        }`}
                       >
-                        Approve
+                        <label
+                          htmlFor={
+                            e.status === "approve" ||
+                            e.status === "deny" ||
+                            "action"
+                          }
+                          className="btn-xs inline-block"
+                        >
+                          Approve
+                        </label>
                       </button>
+
                       <button
                         onClick={() => {
                           setStatus("deny");
-                          handleStatusUpdate(e._id);
+                          setStatusId(e._id);
                         }}
-                        className="btn-xs bg-red-500 hover:bg-red-600 text-white mx-1"
+                        disabled={
+                          (e.status === "deny" || e.status === "approve") &&
+                          true
+                        }
+                        className={`text-white uppercase mx-1 ${
+                          e.status === "deny" || e.status === "approve"
+                            ? "bg-gray-400"
+                            : "bg-red-500 hover:bg-red-600"
+                        }`}
                       >
-                        Deny
+                        <label
+                          htmlFor={
+                            e.status === "approve" ||
+                            e.status === "deny" ||
+                            "action"
+                          }
+                          className="btn-xs inline-block"
+                        >
+                          Deny
+                        </label>
                       </button>
-                      <button
-                        onClick={() => setFeedback(e)}
-                        className="btn-xs bg-amber-500 hover:bg-amber-600 text-white mx-1"
-                      >
-                        <label htmlFor="feedback">Feedback</label>
-                      </button>
+                    </td>
+                    <td>
                       <button
                         onClick={() => handleDeleteClasses(e._id)}
                         className="btn-xs bg-red-500 hover:bg-red-600 text-white mx-1"
                       >
-                        Delete
+                        <FontAwesomeIcon icon={faTrashAlt} />
                       </button>
                     </td>
                   </tr>
@@ -125,43 +177,60 @@ function ManageClasses() {
           </p>
         )}
       </div>
-      <input type="checkbox" id="feedback" className="modal-toggle" />
+      <input type="checkbox" id="action" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box rounded-none">
-          <div className="flex justify-between items-center">
-            <h3 className="font-bold text-lg">
-              Feedback: {feedback.courseName}
-            </h3>
+          <div className="flex justify-end items-center">
             <label
-              htmlFor="feedback"
-              className="cursor-pointer w-8 h-8 rounded-full flex justify-center items-center bg-base-300"
+              htmlFor="action"
+              className="cursor-pointer w-6 h-6 rounded-full flex justify-center items-center bg-base-300"
             >
               <FontAwesomeIcon icon={faXmark} />
             </label>
           </div>
+          {status && (
+            <h3 className="font-bold text-lg text-center my-3">{`Are you sure you want to ${status} this class?`}</h3>
+          )}
           <div className="py-4">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <textarea
-                rows="5"
-                {...register("feedback", {
-                  required: "This field is required",
-                  pattern: {
-                    value:
-                      /^[a-zA-Z0-9\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{60,}$/g,
-                    message:
-                      "Feedback should contain only alphanumeric characters and 60 characters",
-                  },
-                })}
-                className="w-full p-3 border outline-none"
-                placeholder="Type here..."
-              />
-              <p className="text-red-600 text-xs">
-                {errors.feedback && <span>{errors?.feedback?.message}</span>}
-              </p>
-              <button className="w-full p-3 mt-2 bg-royalPurple text-white outline-none uppercase">
-                Submit
-              </button>
-            </form>
+            {status ? (
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <input
+                  type="text"
+                  defaultValue={status}
+                  readOnly
+                  {...register("status", { required: true })}
+                  className="w-full p-3 mb-2 border outline-none"
+                  placeholder="Status"
+                />
+                <textarea
+                  rows="5"
+                  {...register("action", {
+                    required: "This field is required",
+                    pattern: {
+                      value:
+                        /^[a-zA-Z0-9\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{20,}$/g,
+                      message: "At least 20 words should be written",
+                    },
+                  })}
+                  className="w-full p-3 border outline-none"
+                  placeholder={`Write the ${status} reason`}
+                />
+                <p className="text-red-600 text-xs">
+                  {errors.action && <span>{errors?.action?.message}</span>}
+                </p>
+                <button className="w-full p-2 mt-2 bg-royalPurple hover:bg-deepRoyalPurple text-white outline-none uppercase text-sm">
+                  {status}
+                </button>
+              </form>
+            ) : (
+              <div className="text-center">
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  className="text-5xl text-green-500 mb-2"
+                />
+                <p>Your status update Successfull</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
