@@ -30,8 +30,14 @@ function MyClass() {
                   <th>{e.create}</th>
                   <td>{e.courseName}</td>
                   <td>${e.price}</td>
-                  <td>{e.seats}</td>
-                  <td>{e.enroll ? e.enroll : 0}</td>
+                  <td>
+                    {e.seats}
+                    <small className="ms-1">Available</small>
+                  </td>
+                  <td>
+                    {e.enroll ? e.enroll : 0}
+                    <small className="ms-1">(Students)</small>
+                  </td>
                   <td>
                     <button className="text-royalPurple">
                       <FontAwesomeIcon icon={faCommentDots} />

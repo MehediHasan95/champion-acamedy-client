@@ -6,15 +6,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ClassesCard({ allClasses }) {
-  const {
-    courseName,
-    image,
-    instructorImage,
-    instructorName,
-    price,
-    seats,
-    description,
-  } = allClasses;
+  const { courseName, image, instructorImage, instructorName, price, seats } =
+    allClasses;
 
   return (
     <div
@@ -31,8 +24,6 @@ function ClassesCard({ allClasses }) {
       </div>
       <div className="flex-1 p-3 grid content-between">
         <h1 className="font-semibold">{courseName}</h1>
-        <p className="text-xs my-2">{description.slice(0, 100) + "..."}</p>
-
         <div className="flex items-center space-x-2">
           <img
             src={instructorImage}
@@ -59,7 +50,7 @@ function ClassesCard({ allClasses }) {
             {seats}
           </p>
         </div>
-        <button className="border border-royalPurple hover:bg-royalPurple hover:text-white w-full py-1">
+        <button className="hover:text-royalPurple hover:font-bold w-full py-1">
           <FontAwesomeIcon icon={faShoppingBasket} className="me-2" />
           Add to Cart
         </button>

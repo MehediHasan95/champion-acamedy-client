@@ -1,6 +1,6 @@
 import {
   faChalkboardUser,
-  faHome,
+  faHomeAlt,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,19 +11,15 @@ import useAuth from "../../hooks/useAuth";
 function AdminDashboard() {
   const { user } = useAuth();
 
-  const active =
-    "w-full p-1 mb-2 text-left text-royalPurple bg-base-100 bg-opacity-50 font-bold";
-  const inActive = "w-full p-1 mb-2 text-left";
+  const active = "w-full p-1 mb-2 text-left font-bold";
+  const inActive = "w-full p-1 mb-2 text-left font-thin";
   return (
     <div>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
-          <div className="flex items-center bg-royalPurple dark:bg-base-300 text-base-100 dark:text-base-content">
-            <label
-              htmlFor="my-drawer-2"
-              className="btn btn-square btn-ghost lg:hidden"
-            >
+          <div className="flex items-center bg-gray-300 bg-opacity-30">
+            <label htmlFor="my-drawer-2" className="btn btn-square lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -43,9 +39,9 @@ function AdminDashboard() {
                 Welcome back! <br />
                 <small>{user && user?.displayName}, Good morning</small>
               </h1>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-8">
                 <Link to="/">
-                  <FontAwesomeIcon icon={faHome} /> Home
+                  <FontAwesomeIcon icon={faHomeAlt} />
                 </Link>
                 <div className="avatar">
                   <div className="w-10 rounded-full">
