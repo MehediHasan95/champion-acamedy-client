@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useManageClasses from "../../hooks/useManageClasses";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 function ManageClasses() {
@@ -68,7 +68,7 @@ function ManageClasses() {
                           setStatus("approve");
                           handleStatusUpdate(e._id);
                         }}
-                        className="btn-xs bg-green-500 text-white mx-1"
+                        className="btn-xs bg-green-500 hover:bg-green-600 text-white mx-1"
                       >
                         Approve
                       </button>
@@ -77,11 +77,14 @@ function ManageClasses() {
                           setStatus("deny");
                           handleStatusUpdate(e._id);
                         }}
-                        className="btn-xs bg-platinum text-white mx-1"
+                        className="btn-xs bg-red-500 hover:bg-red-600 text-white mx-1"
                       >
                         Deny
                       </button>
-                      <button className="btn-xs bg-amber-500 text-white mx-1">
+                      <button
+                        onClick={() => window.feedback.showModal()}
+                        className="btn-xs bg-amber-500 hover:bg-amber-600 text-white mx-1"
+                      >
                         Feedback
                       </button>
                     </td>
@@ -95,6 +98,28 @@ function ManageClasses() {
           </p>
         )}
       </div>
+      <dialog id="feedback" className="modal">
+        <form method="dialog" className="modal-box rounded-none">
+          <div className="flex justify-between items-center">
+            <h3 className="font-bold text-lg">Feedback</h3>
+            <button className="w-8 h-8 rounded-full bg-base-300">
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+          <div className="py-4">
+            <form>
+              <textarea
+                rows="5"
+                className="w-full p-3 mb-2 border outline-none"
+                placeholder="type here"
+              />
+              <button className="w-full p-3 outline-none bg-royalPurple hover:bg-deepRoyalPurple text-white">
+                Submit
+              </button>
+            </form>
+          </div>
+        </form>
+      </dialog>
     </div>
   );
 }
