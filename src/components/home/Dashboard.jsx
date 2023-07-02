@@ -30,7 +30,7 @@ function Dashboard() {
                 <NavLink to="payment">
                   {({ isActive }) => (
                     <button className={isActive ? active : inActive}>
-                      Payment
+                      My Enroll Classes
                     </button>
                   )}
                 </NavLink>

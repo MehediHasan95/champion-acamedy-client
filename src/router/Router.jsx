@@ -14,6 +14,7 @@ import MyClass from "../components/instructor/MyClass";
 import InstructorProfile from "../components/instructor/InstructorProfile";
 import Classes from "../components/home/Classes";
 import MySelectedClass from "../components/student/MySelectedClass";
+import CheckoutForm from "../components/student/CheckoutForm";
 
 const router = createBrowserRouter([
   {
