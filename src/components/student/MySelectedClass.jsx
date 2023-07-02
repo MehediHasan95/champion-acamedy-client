@@ -1,10 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAddToCart from "../../hooks/useAddToCart";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { SnackbarSuccess } from "../utilities/Snackbar";
 
 function MySelectedClass() {
   const [carts, refetch, isLoading] = useAddToCart();
-  console.log(carts);
+  const [instance] = useAxiosSecure();
+
+  const handleDeleteCart = (_id) => {
+    instance.delete(`/add-to-cart/${_id}`).then((res) => {
+      if (res.data.deletedCount > 0) {
+        refetch();
+        SnackbarSuccess("Remove from list");
+      }
+    });
+  };
 
   return (
     <div>
@@ -33,7 +44,10 @@ function MySelectedClass() {
                       <small>Price: ${e.price}</small>
                     </p>
                   </div>
-                  <button className="bg-red-500 hover:bg-red-600 text-white w-8 h-8 me-5">
+                  <button
+                    onClick={() => handleDeleteCart(e._id)}
+                    className="bg-red-500 hover:bg-red-600 text-white w-8 h-8 me-5"
+                  >
                     <FontAwesomeIcon icon={faTrashAlt} />
                   </button>
                 </div>
