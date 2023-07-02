@@ -4,7 +4,6 @@ import { faEdit, faXmark } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { SnackbarSuccess } from "../utilities/Snackbar";
 
 function MyClass() {
@@ -13,15 +12,19 @@ function MyClass() {
   const [instance] = useAxiosSecure();
   const [update, setUpdate] = useState({});
 
-  const { register, handleSubmit } = useForm();
-
   const handleEditClasses = (_id) => {
     instance.get(`/manage-classes/${_id}?uid=${user?.uid}`).then((res) => {
       setUpdate(res.data);
     });
   };
 
-  const onSubmit = (data) => {
+  const handleUpdateClasses = (e) => {
+    e.preventDefault();
+    const courseName = e.target.courseName.value;
+    const price = e.target.price.value;
+    const seats = e.target.seats.value;
+    const image = e.target.image.value;
+    const data = { courseName, price, seats, image };
     instance
       .patch(`/manage-classes/${update._id}?uid=${user?.uid}`, data)
       .then((res) => {
@@ -109,38 +112,44 @@ function MyClass() {
               className="bg-base-300 w-6 h-6 rounded-full"
             />
           </label>
-          <h3 className="font-bold text-lg">Hello!</h3>
+          <h3 className="font-bold text-lg">
+            Please update your class information
+          </h3>
           <div className="py-4">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleUpdateClasses}>
               <input
                 type="text"
+                name="courseName"
                 defaultValue={update.courseName}
-                {...register("courseName", { required: true })}
                 className="w-full p-3 mb-2 border outline-none"
                 placeholder="Class name"
+                required
               />
               <input
                 type="text"
+                name="price"
                 defaultValue={update.price}
-                {...register("price", { required: true })}
                 className="w-full p-3 mb-2 border outline-none"
                 placeholder="Price"
+                required
               />
               <input
                 type="text"
+                name="seats"
                 defaultValue={update.seats}
-                {...register("seats", { required: true })}
                 className="w-full p-3 mb-2 border outline-none"
                 placeholder="Seats"
+                required
               />
               <input
                 type="text"
+                name="image"
                 defaultValue={update.image}
-                {...register("image", { required: true })}
                 className="w-full p-3 mb-2 border outline-none"
-                placeholder="PhotoURL"
+                placeholder="Image"
+                required
               />
-              <button className="w-full p-3 bg-royalPurple text-white">
+              <button className="w-full p-3 bg-royalPurple text-white uppercase text-sm">
                 Update
               </button>
             </form>

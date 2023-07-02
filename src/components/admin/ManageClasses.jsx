@@ -9,7 +9,6 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { SnackbarSuccess } from "../utilities/Snackbar";
 
 function ManageClasses() {
@@ -19,21 +18,16 @@ function ManageClasses() {
   const [status, setStatus] = useState("");
   const [statusId, setStatusId] = useState("");
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
+  const handleUpdateStatus = (e) => {
+    e.preventDefault();
+    const status = e?.target?.status?.value;
+    const feedback = e?.target?.feedback?.value;
+    const data = { status, feedback: feedback || null };
     instance
       .patch(`/manage-classes/${statusId}?uid=${user?.uid}`, data)
       .then((res) => {
-        console.log(res.data);
         if (res.data.matchedCount > 0) {
           refetch();
-          reset();
           setStatusId("");
           setStatus("");
           SnackbarSuccess("Feedback send success");
@@ -43,8 +37,10 @@ function ManageClasses() {
 
   const handleDeleteClasses = (_id) => {
     instance.delete(`/manage-classes/${_id}?uid=${user?.uid}`).then((res) => {
-      console.log(res.data);
-      refetch();
+      if (res.data.deletedCount > 0) {
+        refetch();
+        SnackbarSuccess("Class delete successfull");
+      }
     });
   };
 
@@ -180,6 +176,7 @@ function ManageClasses() {
         <div className="modal-box rounded-none">
           <div className="flex justify-end items-center">
             <label
+              onClick={() => setStatus("")}
               htmlFor="action"
               className="cursor-pointer w-6 h-6 rounded-full flex justify-center items-center bg-base-300"
             >
@@ -191,34 +188,27 @@ function ManageClasses() {
           )}
           <div className="py-4">
             {status ? (
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleUpdateStatus}>
                 <input
                   type="text"
+                  name="status"
                   defaultValue={status}
                   readOnly
-                  {...register("status", { required: true })}
                   className="w-full p-3 mb-2 border outline-none"
                   placeholder="Status"
+                  required
                 />
                 {status === "deny" && (
                   <textarea
                     rows="5"
-                    {...register("feedback", {
-                      required: "This field is required",
-                      pattern: {
-                        value:
-                          /^[a-zA-Z0-9\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{20,}$/g,
-                        message: "At least 20 words should be written",
-                      },
-                    })}
-                    className="w-full p-3 border outline-none"
+                    name="feedback"
+                    className="w-full p-3 mb-2 border outline-none"
                     placeholder={`Write the ${status} reason`}
+                    required
                   />
                 )}
-                <p className="text-red-600 text-xs">
-                  {errors.action && <span>{errors?.action?.message}</span>}
-                </p>
-                <button className="w-full p-2 mt-2 bg-royalPurple hover:bg-deepRoyalPurple text-white outline-none uppercase text-sm">
+
+                <button className="w-full p-2 bg-royalPurple hover:bg-deepRoyalPurple text-white outline-none uppercase text-sm">
                   {status}
                 </button>
               </form>

@@ -55,6 +55,7 @@ function AddClass() {
               create,
               status: null,
               feedback: null,
+              enroll: 0,
             })
             .then((res) => {
               if (res.data.acknowledged) {
