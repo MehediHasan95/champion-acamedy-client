@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import ClassesCard from "../utilities/ClassesCard";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { SnackbarError, SnackbarSuccess } from "../utilities/Snackbar";
 
 function Classes() {
   const [allClasses, isLoading] = useAllClasses();
@@ -12,22 +13,14 @@ function Classes() {
   const [instance] = useAxiosSecure();
 
   const handleAddToCart = (course) => {
-    const {
-      uid,
-      _id,
-      courseName,
-      instructorEmail,
-      instructorName,
-      price,
-      image,
-    } = course;
+    const { _id, courseName, instructorEmail, instructorName, price, image } =
+      course;
 
     if (user) {
-      console.log(" okay");
       instance
-        .post(`/add-to-cart?uid=${user?.uid}`, {
-          uid,
-          _id,
+        .post("/add-to-cart", {
+          uid: user?.uid,
+          classId: _id,
           courseName,
           instructorName,
           instructorEmail,
@@ -35,7 +28,11 @@ function Classes() {
           image,
         })
         .then((res) => {
-          console.log(res.data);
+          if (res.data.insertedId) {
+            SnackbarSuccess("Add to Cart successfull");
+          } else {
+            SnackbarError("Already added");
+          }
         });
     } else {
       swal("Please login before add to cart.", {

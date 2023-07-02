@@ -13,6 +13,7 @@ import AddClass from "../components/instructor/AddClass";
 import MyClass from "../components/instructor/MyClass";
 import InstructorProfile from "../components/instructor/InstructorProfile";
 import Classes from "../components/home/Classes";
+import MySelectedClass from "../components/student/MySelectedClass";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
           {
             path: "instructor-profile",
             element: <InstructorProfile />,
+          },
+          {
+            path: "myselectedclass",
+            element: <MySelectedClass />,
           },
         ],
       },

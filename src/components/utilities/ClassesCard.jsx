@@ -9,7 +9,6 @@ import useRole from "../../hooks/useRole";
 function ClassesCard({ allClasses, handleAddToCart }) {
   const { courseName, image, instructorImage, instructorName, price, seats } =
     allClasses;
-
   const [role, isLoading] = useRole();
 
   return (
