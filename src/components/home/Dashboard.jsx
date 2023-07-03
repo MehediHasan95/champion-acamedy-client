@@ -4,8 +4,8 @@ import useRole from "../../hooks/useRole";
 function Dashboard() {
   const [role, isLoading] = useRole();
 
-  const active = "px-3 py-1 bg-royalPurple text-white uppercase";
-  const inActive = "px-3 py-1 uppercase";
+  const active = "px-3 py-1 bg-royalPurple text-white";
+  const inActive = "px-3 py-1 border border-base-300";
 
   return (
     <div className="min-h-75 max-w-screen-2xl mx-auto">
@@ -14,7 +14,7 @@ function Dashboard() {
       </div>
 
       <div>
-        <ul className="flex justify-center space-x-2 my-5">
+        <ul className="flex justify-start my-5">
           {!isLoading && role?.role === "student" ? (
             <>
               <li>

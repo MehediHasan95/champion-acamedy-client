@@ -1,12 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAddToCart from "../../hooks/useAddToCart";
-import { faTrashAlt, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { SnackbarSuccess } from "../utilities/Snackbar";
-import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
-import { loadStripe } from "@stripe/stripe-js";
-const stripePromise = loadStripe(import.meta.env.VITE_APP_SECRET_KEY);
+import { Link } from "react-router-dom";
 
 function MySelectedClass() {
   const [carts, refetch, isLoading] = useAddToCart();
@@ -28,15 +25,15 @@ function MySelectedClass() {
 
   return (
     <div>
-      <div className="grid lg:grid-cols-3">
-        <div className="col-span-2">
+      <div className="grid gap-5 lg:grid-cols-3 p-2">
+        <div className="lg:col-span-2">
           {carts?.length > 0 ? (
             <>
               {!isLoading &&
                 carts?.map((e) => (
                   <div
                     key={e._id}
-                    className="w-11/12 lg:w-3/4 mx-auto flex space-x-3 mb-2 shadow"
+                    className="mx-auto flex space-x-3 mb-2 border border-base-300"
                   >
                     <div className="w-24 h-20">
                       <img
@@ -72,7 +69,7 @@ function MySelectedClass() {
           )}
         </div>
         <div className="col-span-1">
-          <div className="shadow p-3">
+          <div className="p-3 border border-base-300">
             <h1 className="font-semibold">Order Summery</h1>
             <p>Selected classes: ({carts?.length})</p>
             <div className="flex justify-between my-3">
@@ -80,31 +77,14 @@ function MySelectedClass() {
               <p>${total}</p>
             </div>
 
-            <label
-              htmlFor="payment"
-              className="p-2 w-full inline-block text-center cursor-pointer bg-royalPurple text-white"
-            >
-              Process to Checkout
-            </label>
-          </div>
-        </div>
-      </div>
-      <input type="checkbox" id="payment" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box">
-          <div className="text-right">
-            <label htmlFor="payment">
-              <FontAwesomeIcon
-                icon={faXmark}
-                className="w-6 h-6 rounded-full bg-base-300 cursor-pointer"
-              />
-            </label>
-          </div>
-          <h3 className="font-bold text-lg">Payment</h3>
-          <div className="py-4">
-            <Elements stripe={stripePromise}>
-              <CheckoutForm />
-            </Elements>
+            <Link to="payment">
+              <button
+                htmlFor="payment"
+                className="p-2 w-full inline-block text-center cursor-pointer bg-royalPurple text-white"
+              >
+                Process to Checkout
+              </button>
+            </Link>
           </div>
         </div>
       </div>
