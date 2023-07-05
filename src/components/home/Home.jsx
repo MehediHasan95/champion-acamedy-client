@@ -1,3 +1,4 @@
+import AdvantageLearning from "./AdvantageLearning";
 import BannerSlider from "./BannerSlider";
 import PopularClasses from "./PopularClasses";
 import PopularInstructors from "./PopularInstructors";
@@ -8,6 +9,7 @@ function Home() {
       <BannerSlider />
       <PopularClasses />
       <PopularInstructors />
+      <AdvantageLearning />
     </div>
   );
 }
