@@ -1,4 +1,8 @@
-import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMoon,
+  faShoppingBasket,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -7,11 +11,13 @@ import { ThemesContext } from "../../context/ThemesProvider";
 import useRole from "../../hooks/useRole";
 import { enqueueSnackbar } from "notistack";
 import useAuth from "../../hooks/useAuth";
+import useAddToCart from "../../hooks/useAddToCart";
 
 function Navbar() {
   const { themeChange, setThemeChange } = useContext(ThemesContext);
   const { user, loading, logOut } = useAuth();
   const [role, isLoading] = useRole();
+  const [carts] = useAddToCart();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -85,6 +91,20 @@ function Navbar() {
           <NavLink to="/auth">
             {({ isActive }) => (
               <button className={isActive ? active : inActive}>Login</button>
+            )}
+          </NavLink>
+        )}
+      </li>
+      <li>
+        {user && (
+          <NavLink to="/dashboard/myselectedclass">
+            {({ isActive }) => (
+              <button className={isActive ? active : inActive}>
+                <FontAwesomeIcon icon={faShoppingBasket} />
+                <span>
+                  <sup>{carts?.length}</sup>
+                </span>
+              </button>
             )}
           </NavLink>
         )}

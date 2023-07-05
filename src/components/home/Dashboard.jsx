@@ -27,7 +27,16 @@ function Dashboard() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="payment">
+                <NavLink to="payment-history">
+                  {({ isActive }) => (
+                    <button className={isActive ? active : inActive}>
+                      Payment History
+                    </button>
+                  )}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="enroll-class">
                   {({ isActive }) => (
                     <button className={isActive ? active : inActive}>
                       My Enroll Classes

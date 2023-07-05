@@ -5,17 +5,20 @@ import ClassesCard from "../utilities/ClassesCard";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { SnackbarError, SnackbarSuccess } from "../utilities/Snackbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import useAddToCart from "../../hooks/useAddToCart";
 
 function Classes() {
   const [allClasses, isLoading] = useAllClasses();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [instance] = useAxiosSecure();
+  const [carts, refetch] = useAddToCart();
 
   const handleAddToCart = (course) => {
     const { _id, courseName, instructorEmail, instructorName, price, image } =
       course;
-
     if (user) {
       instance
         .post("/add-to-cart", {
@@ -30,8 +33,10 @@ function Classes() {
         .then((res) => {
           if (res.data.insertedId) {
             SnackbarSuccess("Add to Cart successfull");
+            refetch();
           } else {
             SnackbarError("Already added");
+            refetch();
           }
         });
     } else {
@@ -48,16 +53,22 @@ function Classes() {
 
   return (
     <div className="max-w-screen-2xl mx-auto my-10">
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 px-3">
-        {!isLoading &&
-          allClasses?.map((e) => (
-            <ClassesCard
-              key={e._id}
-              allClasses={e}
-              handleAddToCart={handleAddToCart}
-            />
-          ))}
-      </div>
+      {allClasses?.length > 0 ? (
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 px-3">
+          {!isLoading &&
+            allClasses?.map((e) => (
+              <ClassesCard
+                key={e._id}
+                allClasses={e}
+                handleAddToCart={handleAddToCart}
+              />
+            ))}
+        </div>
+      ) : (
+        <div className="min-h-75 grid place-items-center">
+          <FontAwesomeIcon icon={faSpinner} className="animate-spin text-2xl" />
+        </div>
+      )}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { SnackbarSuccess } from "../utilities/Snackbar";
 import { Link } from "react-router-dom";
+import { emptyCart } from "../utilities/utils";
 
 function MySelectedClass() {
   const [carts, refetch, isLoading] = useAddToCart();
@@ -64,7 +65,7 @@ function MySelectedClass() {
             </>
           ) : (
             <div className="text-center my-10">
-              <p>No Carts</p>
+              <img src={emptyCart} alt="no-data" className="w-2/12 mx-auto" />
             </div>
           )}
         </div>
@@ -77,14 +78,16 @@ function MySelectedClass() {
               <p>${total}</p>
             </div>
 
-            <Link to="payment">
-              <button
-                htmlFor="payment"
-                className="p-2 w-full inline-block text-center cursor-pointer bg-royalPurple text-white"
-              >
-                Process to Checkout
-              </button>
-            </Link>
+            {total > 0 && (
+              <Link to="payment">
+                <button
+                  htmlFor="payment"
+                  className="p-2 w-full inline-block text-center cursor-pointer bg-royalPurple text-white"
+                >
+                  Process to Checkout
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

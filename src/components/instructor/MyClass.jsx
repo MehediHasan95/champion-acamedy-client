@@ -21,8 +21,8 @@ function MyClass() {
   const handleUpdateClasses = (e) => {
     e.preventDefault();
     const courseName = e.target.courseName.value;
-    const price = e.target.price.value;
-    const seats = e.target.seats.value;
+    const price = parseFloat(e.target.price.value);
+    const seats = parseInt(e.target.seats.value);
     const image = e.target.image.value;
     const data = { courseName, price, seats, image };
     instance

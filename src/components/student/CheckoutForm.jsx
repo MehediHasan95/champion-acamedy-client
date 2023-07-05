@@ -4,16 +4,16 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
+import { amex, discover, mastercard, visa } from "../utilities/utils";
 
-function CheckoutForm({ total, classId }) {
+function CheckoutForm({ total, carts, refetch }) {
   const stripe = useStripe();
   const elements = useElements();
   const [errMsg, setErrMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
   const [loader, setLoader] = useState(false);
 
   const [clientSecret, setClientSecret] = useState("");
-  const { user } = useAuth();
+  const { user, create } = useAuth();
 
   const [instance] = useAxiosSecure();
 
@@ -39,7 +39,7 @@ function CheckoutForm({ total, classId }) {
       return;
     }
 
-    const { error } = await stripe.createPaymentMethod({
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -48,7 +48,6 @@ function CheckoutForm({ total, classId }) {
       setLoader(false);
       setErrMsg(error.message);
     } else {
-      setLoader(false);
       setErrMsg("");
     }
 
@@ -69,18 +68,21 @@ function CheckoutForm({ total, classId }) {
       setErrMsg(err.message);
     } else {
       if (paymentIntent?.status === "succeeded") {
-        setSuccessMsg(paymentIntent?.status);
         const paymentInfo = {
           uid: user?.uid,
           displayName: user?.displayName,
           email: user?.email,
           transactionId: paymentIntent?.id,
           total,
-          classId,
+          carts,
+          card: paymentMethod?.card?.brand,
+          country: paymentMethod?.card?.country,
+          create,
         };
         instance.post("/payment", paymentInfo).then((res) => {
           if (res.data.deletedCount > 0) {
             setLoader(false);
+            refetch();
           }
         });
       }
@@ -89,11 +91,18 @@ function CheckoutForm({ total, classId }) {
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-xl p-5 border border-base-300 rounded-lg"
-      >
+      <form onSubmit={handleSubmit}>
+        <div className="flex justify-between items-center">
+          <p className="text-sm">Card information</p>
+          <div className="flex space-x-1">
+            <img src={visa} alt="visa" className="w-10" />
+            <img src={mastercard} alt="mastercard" className="w-10" />
+            <img src={amex} alt="amex" className="w-10" />
+            <img src={discover} alt="discover" className="w-10" />
+          </div>
+        </div>
         <CardElement
+          className="border border-base-300 p-3 my-2"
           options={{
             style: {
               base: {
@@ -109,9 +118,11 @@ function CheckoutForm({ total, classId }) {
             },
           }}
         />
+
+        <p className="my-3 text-xs text-red-500">{errMsg}</p>
         <button
           type="submit"
-          className="w-full mt-5 p-2 bg-stone-900 text-white"
+          className="w-full p-2 bg-stone-900 text-white"
           disabled={!stripe || !clientSecret}
         >
           {loader ? (
@@ -123,8 +134,6 @@ function CheckoutForm({ total, classId }) {
           )}
         </button>
       </form>
-      <p className="text-xs text-red-500">{errMsg}</p>
-      <p className="text-xs text-green-500">{successMsg}</p>
     </div>
   );
 }

@@ -7,14 +7,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useRole from "../../hooks/useRole";
 
 function ClassesCard({ allClasses, handleAddToCart }) {
-  const { courseName, image, instructorImage, instructorName, price, seats } =
-    allClasses;
+  const {
+    courseName,
+    image,
+    instructorImage,
+    instructorName,
+    price,
+    seats,
+    enroll,
+  } = allClasses;
   const [role, isLoading] = useRole();
 
   return (
     <div
-      className={`col-span-1 flex shadow overflow-hidden ${
-        seats > 0 ? "bg-royalPurple bg-opacity-10" : "bg-platinum bg-opacity-10"
+      className={`col-span-1 flex overflow-hidden ${
+        seats > 0 ? "bg-base-300" : "bg-red-200"
       }`}
     >
       <div className="w-36 h-52">
@@ -49,6 +56,12 @@ function ClassesCard({ allClasses, handleAddToCart }) {
             <span className="text-royalPurple font-semibold me-2">
               <FontAwesomeIcon icon={faChair} />
             </span>
+            {enroll}
+          </p>
+          <p>
+            <span className="text-royalPurple font-semibold me-2">
+              <FontAwesomeIcon icon={faChair} />
+            </span>
             {seats}
           </p>
         </div>
@@ -56,7 +69,7 @@ function ClassesCard({ allClasses, handleAddToCart }) {
           onClick={() => handleAddToCart(allClasses)}
           className={`w-full py-1 ${
             !isLoading && role?.role === "student" && seats > 0
-              ? "bg-royalPurple text-white"
+              ? "bg-royalPurple hover:bg-deepRoyalPurple text-white"
               : "bg-gray-400 text-gray-300"
           }`}
           disabled={
@@ -68,7 +81,7 @@ function ClassesCard({ allClasses, handleAddToCart }) {
           }
         >
           <FontAwesomeIcon icon={faShoppingBasket} className="me-2" />
-          Add to Cart
+          {seats > 0 ? "Add to Cart" : "Unavailable"}
         </button>
       </div>
     </div>

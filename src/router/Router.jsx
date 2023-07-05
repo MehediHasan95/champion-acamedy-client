@@ -16,6 +16,8 @@ import Classes from "../components/home/Classes";
 import MySelectedClass from "../components/student/MySelectedClass";
 import CheckoutForm from "../components/student/CheckoutForm";
 import Payment from "../components/student/Payment";
+import PaymentHistory from "../components/student/PaymentHistory";
+import MyEnrollClasses from "../components/student/MyEnrollClasses";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
           {
             path: "myselectedclass/payment",
             element: <Payment />,
+          },
+          {
+            path: "payment-history",
+            element: <PaymentHistory />,
+          },
+          {
+            path: "enroll-class",
+            element: <MyEnrollClasses />,
           },
         ],
       },
