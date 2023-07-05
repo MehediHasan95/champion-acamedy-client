@@ -56,6 +56,13 @@ function Navbar() {
           )}
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/instructor">
+          {({ isActive }) => (
+            <button className={isActive ? active : inActive}>Instructor</button>
+          )}
+        </NavLink>
+      </li>
 
       {user && (
         <li>

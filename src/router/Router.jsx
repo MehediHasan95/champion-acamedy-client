@@ -18,6 +18,7 @@ import CheckoutForm from "../components/student/CheckoutForm";
 import Payment from "../components/student/Payment";
 import PaymentHistory from "../components/student/PaymentHistory";
 import MyEnrollClasses from "../components/student/MyEnrollClasses";
+import AllInstructor from "../components/home/AllInstructor";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "classes",
         element: <Classes />,
+      },
+      {
+        path: "instructor",
+        element: <AllInstructor />,
       },
       {
         path: "dashboard",
