@@ -6,7 +6,9 @@ function useAllInstructor() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/all-instructor")
+      .get(
+        "https://b7a12-summer-camp-server-side-mehedi-hasan95.vercel.app/all-instructor"
+      )
       .then((res) => setAllInstructor(res.data));
   }, []);
 

@@ -4,6 +4,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useManageClasses from "../../hooks/useManageClasses";
 import {
   faCircleCheck,
+  faCircleXmark,
   faSpinner,
   faTrashAlt,
   faXmark,
@@ -108,7 +109,7 @@ function ManageClasses() {
                           e.status === "approve" ||
                           (e.status === "deny" && true)
                         }
-                        className={`text-white uppercase mx-1 ${
+                        className={`text-white btn-xs uppercase mx-1 ${
                           e.status === "approve" || e.status === "deny"
                             ? "bg-gray-400"
                             : "bg-green-500 hover:bg-green-600"
@@ -120,9 +121,8 @@ function ManageClasses() {
                             e.status === "deny" ||
                             "action"
                           }
-                          className="btn-xs inline-block"
                         >
-                          Approve
+                          <FontAwesomeIcon icon={faCircleCheck} /> Approve
                         </label>
                       </button>
 
@@ -135,7 +135,7 @@ function ManageClasses() {
                           (e.status === "deny" || e.status === "approve") &&
                           true
                         }
-                        className={`text-white uppercase mx-1 ${
+                        className={`text-white btn-xs uppercase mx-1 ${
                           e.status === "deny" || e.status === "approve"
                             ? "bg-gray-400"
                             : "bg-red-500 hover:bg-red-600"
@@ -147,9 +147,8 @@ function ManageClasses() {
                             e.status === "deny" ||
                             "action"
                           }
-                          className="btn-xs inline-block"
                         >
-                          Deny
+                          <FontAwesomeIcon icon={faCircleXmark} /> Deny
                         </label>
                       </button>
                     </td>
@@ -194,7 +193,7 @@ function ManageClasses() {
                   name="status"
                   defaultValue={status}
                   readOnly
-                  className="w-full p-3 mb-2 border outline-none"
+                  className="w-full p-3 mb-2 border outline-none uppercase"
                   placeholder="Status"
                   required
                 />

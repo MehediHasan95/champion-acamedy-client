@@ -23,7 +23,10 @@ function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (result) => {
       if (result) {
         axios
-          .post("http://localhost:5000/jwt", { uid: result.uid })
+          .post(
+            "https://b7a12-summer-camp-server-side-mehedi-hasan95.vercel.app/jwt",
+            { uid: result.uid }
+          )
           .then((res) => {
             localStorage.setItem("access-token", res.data.token);
             setLoading(false);

@@ -5,7 +5,9 @@ function useAllClasses() {
   const { data: allClasses, isLoading } = useQuery({
     queryKey: ["all-classes"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/all-classes");
+      const res = await axios.get(
+        "https://b7a12-summer-camp-server-side-mehedi-hasan95.vercel.app/all-classes"
+      );
       return res.data;
     },
   });

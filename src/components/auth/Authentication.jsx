@@ -47,14 +47,17 @@ function Authentication() {
               .then(() => {
                 const { uid, displayName, email, photoURL } = res.user;
                 axios
-                  .post("http://localhost:5000/users", {
-                    uid,
-                    displayName,
-                    email,
-                    photoURL,
-                    role: "student",
-                    create,
-                  })
+                  .post(
+                    "https://b7a12-summer-camp-server-side-mehedi-hasan95.vercel.app/users",
+                    {
+                      uid,
+                      displayName,
+                      email,
+                      photoURL,
+                      role: "student",
+                      create,
+                    }
+                  )
                   .then((res) => {
                     if (res.data.acknowledged) {
                       navigate(from, { replace: true });
@@ -95,14 +98,17 @@ function Authentication() {
     googleSignIn().then((res) => {
       const { uid, displayName, email, photoURL } = res.user;
       axios
-        .post("http://localhost:5000/users", {
-          uid,
-          displayName,
-          email,
-          photoURL,
-          role: "student",
-          create,
-        })
+        .post(
+          "https://b7a12-summer-camp-server-side-mehedi-hasan95.vercel.app/users",
+          {
+            uid,
+            displayName,
+            email,
+            photoURL,
+            role: "student",
+            create,
+          }
+        )
         .then((res) => {
           if (res.data.acknowledged) {
             navigate(from, { replace: true });

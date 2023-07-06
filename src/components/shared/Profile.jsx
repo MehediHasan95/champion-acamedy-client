@@ -56,7 +56,7 @@ function Profile() {
               <select
                 defaultValue={gender}
                 {...register("gender", { required: true })}
-                className="border w-full p-2 mb-3 outline-none"
+                className="border border-royalPurple w-full p-2 mb-3 outline-none"
               >
                 <option selected disabled>
                   Pick one
@@ -69,14 +69,14 @@ function Profile() {
                 type="text"
                 defaultValue={phone}
                 {...register("phone", { required: true })}
-                className="border w-full p-2 mb-3 outline-none"
+                className="border border-royalPurple w-full p-2 mb-3 outline-none"
                 placeholder="Phone"
               />
               <input
                 type="text"
                 defaultValue={address}
                 {...register("address", { required: true })}
-                className="border w-full p-2 mb-3 outline-none"
+                className="border border-royalPurple w-full p-2 mb-3 outline-none"
                 placeholder="Address"
               />
               <div className="flex justify-start space-x-5">

@@ -8,6 +8,7 @@ import { SnackbarError, SnackbarSuccess } from "../utilities/Snackbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import useAddToCart from "../../hooks/useAddToCart";
+import { noData } from "../utilities/utils";
 
 function Classes() {
   const [allClasses, isLoading] = useAllClasses();
@@ -66,7 +67,7 @@ function Classes() {
         </div>
       ) : (
         <div className="min-h-75 grid place-items-center">
-          <FontAwesomeIcon icon={faSpinner} className="animate-spin text-2xl" />
+          <img src={noData} alt="no_data" className="w-3/6" />
         </div>
       )}
     </div>
