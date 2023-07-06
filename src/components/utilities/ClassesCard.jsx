@@ -2,6 +2,7 @@ import {
   faChair,
   faMoneyBillWave,
   faShoppingBasket,
+  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useRole from "../../hooks/useRole";
@@ -20,8 +21,8 @@ function ClassesCard({ allClasses, handleAddToCart }) {
 
   return (
     <div
-      className={`col-span-1 flex overflow-hidden ${
-        seats > 0 ? "bg-base-300" : "bg-red-200"
+      className={`col-span-1 hover:shadow flex overflow-hidden ${
+        seats > 0 ? "bg-base-300" : "bg-red-100"
       }`}
     >
       <div className="w-36 h-52">
@@ -52,25 +53,36 @@ function ClassesCard({ allClasses, handleAddToCart }) {
             </span>
             ${price}
           </p>
-          <p>
-            <span className="text-royalPurple font-semibold me-2">
-              <FontAwesomeIcon icon={faChair} />
-            </span>
-            {enroll}
-          </p>
-          <p>
-            <span className="text-royalPurple font-semibold me-2">
-              <FontAwesomeIcon icon={faChair} />
-            </span>
-            {seats}
-          </p>
+
+          <div className="flex space-x-5">
+            <p>
+              <span
+                className="text-royalPurple font-semibold me-2 tooltip"
+                data-tip="Enroll"
+              >
+                <FontAwesomeIcon icon={faUserGroup} />
+              </span>
+              {enroll}
+            </p>
+            <p>
+              <span
+                className="text-royalPurple font-semibold me-2 tooltip"
+                data-tip="Seats"
+              >
+                <FontAwesomeIcon icon={faChair} />
+              </span>
+              {seats}
+            </p>
+          </div>
         </div>
         <button
           onClick={() => handleAddToCart(allClasses)}
-          className={`w-full py-1 ${
+          className={`w-full py-1 uppercase text-sm ${
             !isLoading && role?.role === "student" && seats > 0
               ? "bg-royalPurple hover:bg-deepRoyalPurple text-white"
-              : "bg-gray-400 text-gray-300"
+              : (isLoading && !role && seats === 0) || role
+              ? "text-red-500"
+              : "bg-royalPurple hover:bg-deepRoyalPurple text-white"
           }`}
           disabled={
             role?.role === "student" && seats > 0
@@ -80,8 +92,11 @@ function ClassesCard({ allClasses, handleAddToCart }) {
               : false
           }
         >
-          <FontAwesomeIcon icon={faShoppingBasket} className="me-2" />
-          {seats > 0 ? "Add to Cart" : "Unavailable"}
+          <FontAwesomeIcon
+            icon={seats > 0 ? faShoppingBasket : faChair}
+            className="me-2"
+          />
+          {seats > 0 ? "Add to Cart" : "Seats Unavailable"}
         </button>
       </div>
     </div>

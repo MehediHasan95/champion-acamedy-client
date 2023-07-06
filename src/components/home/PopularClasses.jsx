@@ -22,16 +22,20 @@ function PopularClasses() {
                   />
                 </div>
                 <div className="p-3">
-                  <div className="flex justify-between font-semibold">
+                  <div className="flex justify-between font-semibold text-royalPurple">
                     <p>{e.courseName}</p>
                     <p>${e.price}</p>
                   </div>
-                  <p className="text-sm my-3">
-                    Instructor: {e.instructorName} ({e.instructorEmail})
-                  </p>
+                  <p className="text-sm my-3">Instructor: {e.instructorName}</p>
                   <div className="flex justify-between">
-                    <p>Enroll Students: {e.enroll}</p>
-                    <p>Available Seats: {e.seats}</p>
+                    <p>
+                      Enroll: {e.enroll}
+                      <small className="text-xs ms-1">(Students)</small>
+                    </p>
+                    <p>
+                      Seats: {e.seats}
+                      <small className="text-xs ms-1">(Available)</small>
+                    </p>
                   </div>
                 </div>
               </div>

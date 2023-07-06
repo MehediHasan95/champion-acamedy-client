@@ -10,8 +10,6 @@ function useAllInstructor() {
       .then((res) => setAllInstructor(res.data));
   }, []);
 
-  console.log(allInstructor);
-
   return [allInstructor, setAllInstructor];
 }
 

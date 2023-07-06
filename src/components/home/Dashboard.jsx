@@ -44,6 +44,15 @@ function Dashboard() {
                   )}
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="student-profile">
+                  {({ isActive }) => (
+                    <button className={isActive ? active : inActive}>
+                      My Profile
+                    </button>
+                  )}
+                </NavLink>
+              </li>
             </>
           ) : (
             <>

@@ -1,6 +1,8 @@
 import {
+  faAddressCard,
   faChalkboardUser,
   faHomeAlt,
+  faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,7 +42,11 @@ function AdminDashboard() {
                 <small>{user && user?.displayName}, Good morning</small>
               </h1>
               <div className="flex items-center space-x-8">
-                <Link to="/">
+                <Link
+                  to="/"
+                  className="tooltip tooltip-left"
+                  data-tip="Back to Home"
+                >
                   <FontAwesomeIcon icon={faHomeAlt} />
                 </Link>
                 <div className="avatar">
@@ -63,6 +69,16 @@ function AdminDashboard() {
               </span>
             </div>
 
+            <li>
+              <NavLink to="admin-profile">
+                {({ isActive }) => (
+                  <button className={isActive ? active : inActive}>
+                    <FontAwesomeIcon icon={faAddressCard} className="px-3" />
+                    My Profile
+                  </button>
+                )}
+              </NavLink>
+            </li>
             <li>
               <NavLink to="manage-users">
                 {({ isActive }) => (

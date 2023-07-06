@@ -19,6 +19,8 @@ import Payment from "../components/student/Payment";
 import PaymentHistory from "../components/student/PaymentHistory";
 import MyEnrollClasses from "../components/student/MyEnrollClasses";
 import AllInstructor from "../components/home/AllInstructor";
+import StudentProfile from "../components/student/StudentProfile";
+import AdminProfile from "../components/admin/AdminProfile";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,10 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
         children: [
+          {
+            path: "student-profile",
+            element: <StudentProfile />,
+          },
           {
             path: "addclass",
             element: <AddClass />,
@@ -90,6 +96,10 @@ const router = createBrowserRouter([
       </PrivateAdminRouter>
     ),
     children: [
+      {
+        path: "admin-profile",
+        element: <AdminProfile />,
+      },
       {
         path: "manage-users",
         element: <ManageUsers />,
