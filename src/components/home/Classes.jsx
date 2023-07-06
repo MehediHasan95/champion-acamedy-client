@@ -5,12 +5,12 @@ import ClassesCard from "../utilities/ClassesCard";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { SnackbarError, SnackbarSuccess } from "../utilities/Snackbar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import useAddToCart from "../../hooks/useAddToCart";
 import { noData } from "../utilities/utils";
+import useTitle from "../../hooks/useTitle";
 
 function Classes() {
+  useTitle("Classes");
   const [allClasses, isLoading] = useAllClasses();
   const { user } = useAuth();
   const navigate = useNavigate();

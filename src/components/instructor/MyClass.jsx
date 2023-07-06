@@ -5,8 +5,10 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
 import { SnackbarSuccess } from "../utilities/Snackbar";
+import useTitle from "../../hooks/useTitle";
 
 function MyClass() {
+  useTitle("My Classes");
   const [myClasses, refetch, isLoading] = useMyClasses();
   const { user } = useAuth();
   const [instance] = useAxiosSecure();

@@ -11,8 +11,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { SnackbarSuccess } from "../utilities/Snackbar";
+import useTitle from "../../hooks/useTitle";
 
 function ManageClasses() {
+  useTitle("Manage Classes");
   const [manageClasses, refetch, isLoading] = useManageClasses();
   const { user } = useAuth();
   const [instance] = useAxiosSecure();

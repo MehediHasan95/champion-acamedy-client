@@ -13,9 +13,11 @@ import { useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
-import { Bounce, Fade, Slide, Zoom } from "react-awesome-reveal";
+import { Bounce } from "react-awesome-reveal";
+import useTitle from "../../hooks/useTitle";
 
 function ManageUsers() {
+  useTitle("Manage Users");
   const [allUser, refetch, isLoading] = useUserList();
   const [roleChange, setRoleChange] = useState("");
   const [loader, setLoader] = useState(false);

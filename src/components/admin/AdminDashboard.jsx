@@ -9,9 +9,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import useAuth from "../../hooks/useAuth";
+import useTitle from "../../hooks/useTitle";
 
 function AdminDashboard() {
   const { user } = useAuth();
+  useTitle("Dashboard");
 
   const active = "w-full p-1 mb-2 text-left font-bold";
   const inActive = "w-full p-1 mb-2 text-left font-thin";

@@ -1,3 +1,4 @@
+import { Slide } from "react-awesome-reveal";
 import { training, fitness, performance, tournament } from "../utilities/utils";
 
 function AdvantageLearning() {
@@ -35,11 +36,13 @@ function AdvantageLearning() {
       </h1>
       <div className="grid gap-3 grid-cols-2 lg:grid-cols-4">
         {data.map((e, index) => (
-          <div key={index} className="grid-cols-1 text-center bg-base-300 p-5">
-            <img src={e.img} alt="image" className="w-2/5 mx-auto" />
-            <h1 className="text-xl font-semibold my-5">{e.title}</h1>
-            <p>{e.details.slice(0, 70)}</p>
-          </div>
+          <Slide key={index}>
+            <div className="grid-cols-1 text-center bg-base-300 p-5">
+              <img src={e.img} alt="image" className="w-2/5 mx-auto" />
+              <h1 className="text-xl font-semibold my-5">{e.title}</h1>
+              <p>{e.details.slice(0, 70)}</p>
+            </div>
+          </Slide>
         ))}
       </div>
     </div>

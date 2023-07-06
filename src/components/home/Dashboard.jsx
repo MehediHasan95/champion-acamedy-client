@@ -1,7 +1,9 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
+import useTitle from "../../hooks/useTitle";
 
 function Dashboard() {
+  useTitle("Dashboard");
   const [role, isLoading] = useRole();
 
   const active = "px-3 py-1 bg-royalPurple text-white";

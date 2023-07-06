@@ -1,7 +1,9 @@
 import usePaymentHistory from "../../hooks/usePaymentHistory";
+import useTitle from "../../hooks/useTitle";
 import { noData } from "../utilities/utils";
 
 function MyEnrollClasses() {
+  useTitle("Enroll");
   const [paymentHistory, isLoading, refetch] = usePaymentHistory();
 
   return (

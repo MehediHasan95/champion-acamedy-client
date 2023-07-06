@@ -4,8 +4,10 @@ import axios from "axios";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
+import useTitle from "../../hooks/useTitle";
 
 function AddClass() {
+  useTitle("Add a Class");
   const { user, create } = useAuth();
   const [instance] = useAxiosSecure();
   const [loader, setLoader] = useState(false);

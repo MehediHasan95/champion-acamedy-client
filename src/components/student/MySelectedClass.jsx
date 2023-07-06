@@ -5,8 +5,10 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { SnackbarSuccess } from "../utilities/Snackbar";
 import { Link } from "react-router-dom";
 import { emptyCart } from "../utilities/utils";
+import useTitle from "../../hooks/useTitle";
 
 function MySelectedClass() {
+  useTitle("Cart");
   const [carts, refetch, isLoading] = useAddToCart();
   const [instance] = useAxiosSecure();
 
