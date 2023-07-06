@@ -31,7 +31,7 @@ function AdvantageLearning() {
 
   return (
     <div className="max-w-screen-2xl mx-auto my-32 px-3">
-      <h1 className="text-center text-5xl font-bold my-20">
+      <h1 className="text-center text-2xl lg:text-5xl font-bold my-20">
         Advantage <span className="text-royalPurple">Learning</span>
       </h1>
       <div className="grid gap-3 grid-cols-2 lg:grid-cols-4">
