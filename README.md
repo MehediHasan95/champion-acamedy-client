@@ -1,4 +1,4 @@
-"# b712-summer-camp-client-side-MehediHasan95"
+"# champion-acamedy-client"
 
 # 🏆Champion Acamedy [live](https://champion-academyy.web.app/)
 
