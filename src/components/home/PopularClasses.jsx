@@ -6,7 +6,7 @@ function PopularClasses() {
   const [allClasses, isLoading] = useAllClasses();
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-3 lg:px-0 my-32">
+    <div className="max-w-screen-2xl mx-auto px-3 my-32">
       <Heading title1={"Popular"} title2={"Classes"} />
       <div>
         <div className="grid gap-3 grid-cols-2 lg:grid-cols-3">

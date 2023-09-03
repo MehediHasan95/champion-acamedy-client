@@ -32,7 +32,7 @@ const blogs = [
 
 const OurBlogs = () => {
   return (
-    <div className="max-w-screen-2xl mx-auto px-3 lg:px-0 my-32">
+    <div className="max-w-screen-2xl mx-auto px-3 my-32">
       <Heading title1={"Our Regular"} title2={"Blog"} />
       <div className="grid gap-5 lg:grid-cols-3">
         {blogs.map(({ id, title, image, date, description }) => (

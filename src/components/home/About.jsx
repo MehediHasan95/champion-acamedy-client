@@ -3,7 +3,7 @@ import { about_us } from "../utilities/utils";
 
 const About = () => {
   return (
-    <div className="max-w-screen-2xl mx-auto px-3 lg:px-0 my-32">
+    <div className="max-w-screen-2xl mx-auto px-3 my-32">
       <div className="grid gap-5 lg:grid-cols-2">
         <div className="col-span-1">
           <img
