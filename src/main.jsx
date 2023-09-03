@@ -7,6 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import AuthProvider from "./context/AuthProvider.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
+import "@smastrom/react-rating/style.css";
 
 const queryClient = new QueryClient();
 

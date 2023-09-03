@@ -145,57 +145,59 @@ function Navbar() {
   );
 
   return (
-    <div className="drawer">
-      <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col">
-        <div className="w-full navbar bg-base-100">
-          <div className="flex-none lg:hidden">
-            <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block w-6 h-6 stroke-current"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
-            </label>
-          </div>
-          <div className="flex-1 justify-between px-2">
-            <Link to="/">
-              <div className="flex">
-                <img src={logo} alt="logo" className="w-8 h-8" />
-                <span className="font-lobster text-2xl text-royalPurple">
-                  Champion<span className="text-platinum">Academy</span>
-                </span>
-              </div>
-            </Link>
-            {user && (
-              <label
-                htmlFor="my-drawer-2"
-                className="drawer-button lg:hidden cursor-pointer"
-              >
-                <div className="avatar block lg:hidden">
-                  <div className="w-8 rounded-full">
-                    <img src={!loading && user?.photoURL} alt="profile" />
-                  </div>
-                </div>
+    <div className="backdrop-blur-sm bg-white/30 fixed top-0 left-0 w-full z-10">
+      <div className="drawer max-w-screen-2xl mx-auto">
+        <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content flex flex-col">
+          <div className="w-full navbar">
+            <div className="flex-none lg:hidden">
+              <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="inline-block w-6 h-6 stroke-current"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  ></path>
+                </svg>
               </label>
-            )}
-          </div>
-          <div className="flex-none hidden lg:block px-5">
-            <ul className="flex items-center">{navItems}</ul>
+            </div>
+            <div className="flex-1 justify-between">
+              <Link to="/">
+                <div className="flex">
+                  <img src={logo} alt="logo" className="w-8 h-8" />
+                  <span className="font-lobster text-2xl text-royalPurple">
+                    Champion<span className="text-platinum">Academy</span>
+                  </span>
+                </div>
+              </Link>
+              {user && (
+                <label
+                  htmlFor="my-drawer-2"
+                  className="drawer-button lg:hidden cursor-pointer"
+                >
+                  <div className="avatar block lg:hidden">
+                    <div className="w-8 rounded-full">
+                      <img src={!loading && user?.photoURL} alt="profile" />
+                    </div>
+                  </div>
+                </label>
+              )}
+            </div>
+            <div className="flex-none hidden lg:block">
+              <ul className="flex items-center">{navItems}</ul>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="drawer-side z-10">
-        <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-        <ul className="p-4 w-80 h-full bg-base-200">{navItems}</ul>
+        <div className="drawer-side z-10">
+          <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
+          <ul className="p-4 w-80 h-full bg-base-200">{navItems}</ul>
+        </div>
       </div>
     </div>
   );

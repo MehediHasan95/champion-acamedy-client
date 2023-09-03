@@ -1,8 +1,6 @@
 import { Carousel } from "react-responsive-carousel";
-import football from "../../assets/banner/football.png";
-import cricket from "../../assets/banner/cricket.png";
-import tabletennis from "../../assets/banner/table-tennis.png";
-import badminton from "../../assets/banner/badminton.png";
+
+import { cricket, football, golf, tabletennis } from "../utilities/utils";
 
 function BannerSlider() {
   const data = [
@@ -27,39 +25,43 @@ function BannerSlider() {
       title: "I love badminton. That’s my sport.",
       quotes:
         "In badminton, they use a lot from the wrist. But I use a lot from the shoulder.",
-      img: badminton,
+      img: golf,
     },
   ];
 
   return (
-    <div>
+    <div className="pt-16 lg:pt-0">
       <Carousel
-        dynamicHeight={"false"}
         autoPlay={true}
         infiniteLoop={true}
         showStatus={false}
         showThumbs={false}
-        showArrows={false}
         showIndicators={false}
-        transitionTime={800}
+        transitionTime={100}
       >
         {data.map((e, index) => (
-          <div key={index} className="min-h-90 grid grid-cols-2 p-5">
-            <div className="col-span-1 grid place-items-center text-left">
-              <div className="lg:w-3/4">
-                <h1 className="font-dmSerif text-xl md:text-5xl lg:text-7xl font-bold">
-                  {e.title}
-                </h1>
-                <p className="my-3 text-xs  md:text-base lg:text-base">
-                  {e.quotes}
-                </p>
-                <button className="w-1/2 lg:w-1/5 py-2 bg-royalPurple hover:bg-deepRoyalPurple text-base-100 dark:text-base-content">
-                  Get Started
-                </button>
+          <div
+            key={index}
+            className="relative bg-fixed bg-cover bg-no-repeat bg-center"
+            style={{ backgroundImage: `url("${e.img}")` }}
+          >
+            <div className="min-h-[30vh] lg:min-h-screen grid grid-cols-3 p-5 max-w-screen-2xl mx-auto">
+              <div className="col-span-2 grid place-items-center text-left">
+                <div className="text-white">
+                  <h1 className="font-dmSerif text-xl md:text-5xl lg:text-8xl font-bold uppercase">
+                    {e.title}
+                  </h1>
+                  <p className="my-3 text-xs  md:text-base lg:text-base">
+                    {e.quotes}
+                  </p>
+                  <button className="w-1/2 lg:w-1/5 py-1 lg:py-2 bg-royalPurple hover:bg-deepRoyalPurple text-base-100 dark:text-base-content">
+                    Get Started
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="col-span-1 w-10/12 lg:w-3/5 mx-auto">
-              <img src={e.img} alt="banner_image" className="w-full" />
+              <div className="col-span-1 grid place-items-center">
+                {/* <img src={e.img} alt="banner_image" className="w-full" /> */}
+              </div>
             </div>
           </div>
         ))}

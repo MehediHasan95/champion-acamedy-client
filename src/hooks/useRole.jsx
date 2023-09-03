@@ -14,7 +14,7 @@ function useRole() {
       return res.data;
     },
   });
-  return [role, isLoading];
+  return [role, isLoading, user];
 }
 
 export default useRole;

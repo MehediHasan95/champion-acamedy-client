@@ -53,7 +53,7 @@ function Classes() {
   };
 
   return (
-    <div className="min-h-75 max-w-screen-2xl mx-auto my-10">
+    <div className="min-h-100 max-w-screen-2xl mx-auto my-20">
       {allClasses?.length > 0 ? (
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 px-3">
           {!isLoading &&

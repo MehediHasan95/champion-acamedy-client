@@ -22,9 +22,6 @@ export default {
         platinum: "#FF5B64",
         oceanBlue: "#190845",
       },
-      minHeight: {
-        75: "75vh",
-      },
     },
   },
   plugins: [require("daisyui")],

@@ -1,5 +1,5 @@
-import { Slide } from "react-awesome-reveal";
 import { training, fitness, performance, tournament } from "../utilities/utils";
+import Heading from "../shared/Heading";
 
 function AdvantageLearning() {
   const data = [
@@ -30,19 +30,15 @@ function AdvantageLearning() {
   ];
 
   return (
-    <div className="max-w-screen-2xl mx-auto my-32 px-3">
-      <h1 className="text-center text-2xl lg:text-5xl font-bold my-20">
-        Advantage <span className="text-royalPurple">Learning</span>
-      </h1>
+    <div className="max-w-screen-2xl mx-auto px-3 lg:px-0 my-32">
+      <Heading title1={"Advantage"} title2={"Learning"} />
       <div className="grid gap-3 grid-cols-2 lg:grid-cols-4">
         {data.map((e, index) => (
-          <Slide key={index}>
-            <div className="grid-cols-1 text-center bg-base-300 p-5">
-              <img src={e.img} alt="image" className="w-2/5 mx-auto" />
-              <h1 className="text-xl font-semibold my-5">{e.title}</h1>
-              <p>{e.details.slice(0, 70)}</p>
-            </div>
-          </Slide>
+          <div key={index} className="col-span-1 text-center bg-base-300 p-5">
+            <img src={e.img} alt="image" className="w-2/5 mx-auto" />
+            <h1 className="text-xl font-semibold my-5">{e.title}</h1>
+            <p>{e.details.slice(0, 70)}</p>
+          </div>
         ))}
       </div>
     </div>

@@ -118,7 +118,7 @@ function Authentication() {
   };
 
   return (
-    <div className="min-h-75 grid place-items-center">
+    <div className="min-h-screen grid place-items-center">
       <div className="grid lg:grid-cols-2 w-full">
         <div className="col-span-1 hidden lg:block">
           <img
