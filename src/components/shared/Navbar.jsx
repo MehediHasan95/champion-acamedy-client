@@ -145,7 +145,11 @@ function Navbar() {
   );
 
   return (
-    <div className="backdrop-blur-sm bg-white/30 fixed top-0 left-0 w-full z-10">
+    <div
+      className={`backdrop-blur-sm ${
+        location.pathname === "/" ? "bg-black/30" : "bg-white/30"
+      } fixed top-0 left-0 w-full z-10`}
+    >
       <div className="drawer max-w-screen-2xl mx-auto">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
@@ -190,7 +194,13 @@ function Navbar() {
               )}
             </div>
             <div className="flex-none hidden lg:block">
-              <ul className="flex items-center">{navItems}</ul>
+              <ul
+                className={`flex items-center ${
+                  location?.pathname === "/" && "text-white"
+                }`}
+              >
+                {navItems}
+              </ul>
             </div>
           </div>
         </div>

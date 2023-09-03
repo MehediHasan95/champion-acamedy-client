@@ -63,7 +63,7 @@ function ManageUsers() {
     <div>
       <div className="overflow-x-auto p-3">
         <div className="my-3">
-          <h1 className="text-center my-5 uppercase">
+          <h1 className="text-center uppercase">
             Manage all users information
           </h1>
         </div>

@@ -51,8 +51,11 @@ function ManageClasses() {
     <div>
       <div className="overflow-x-auto p-3">
         <div className="my-3">
-          <h1>Manage all classes</h1>
+          <h1 className="text-center uppercase">
+            Manage all classes information
+          </h1>
         </div>
+
         {!isLoading ? (
           <table className="table text-center">
             <thead className="bg-royalPurple text-white">

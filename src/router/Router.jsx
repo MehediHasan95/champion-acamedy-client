@@ -20,6 +20,7 @@ import MyEnrollClasses from "../components/student/MyEnrollClasses";
 import AllInstructor from "../components/home/AllInstructor";
 import StudentProfile from "../components/student/StudentProfile";
 import AdminProfile from "../components/admin/AdminProfile";
+import ManageContact from "../components/admin/ManageContact";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
       {
         path: "manage-users",
         element: <ManageUsers />,
+      },
+      {
+        path: "manage-contact",
+        element: <ManageContact />,
       },
       {
         path: "manage-classes",

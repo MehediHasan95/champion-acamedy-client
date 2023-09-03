@@ -1,6 +1,8 @@
 import {
   faAddressCard,
   faChalkboardUser,
+  faContactBook,
+  faHome,
   faHomeAlt,
   faUser,
   faUsers,
@@ -17,6 +19,23 @@ function AdminDashboard() {
 
   const active = "w-full p-1 mb-2 text-left font-bold";
   const inActive = "w-full p-1 mb-2 text-left font-thin";
+
+  function greetByTime() {
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
+    let greeting;
+    if (currentHour >= 5 && currentHour < 12) {
+      greeting = "Good morning";
+    } else if (currentHour >= 12 && currentHour < 18) {
+      greeting = "Good afternoon";
+    } else {
+      greeting = "Good night";
+    }
+    return greeting;
+  }
+
+  const greeting = greetByTime();
+
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -40,8 +59,10 @@ function AdminDashboard() {
             </label>
             <div className="w-full flex justify-between items-center py-2 px-4">
               <h1>
-                Welcome back! <br />
-                <small>{user && user?.displayName}, Good morning</small>
+                <span className="text-2xl font-bold">Welcome back!</span> <br />
+                <small>
+                  {user && user?.displayName}, {greeting}
+                </small>
               </h1>
               <div className="flex items-center space-x-8">
                 <Link
@@ -97,6 +118,26 @@ function AdminDashboard() {
                   <button className={isActive ? active : inActive}>
                     <FontAwesomeIcon icon={faChalkboardUser} className="px-3" />
                     Manage Classes
+                  </button>
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="manage-contact">
+                {({ isActive }) => (
+                  <button className={isActive ? active : inActive}>
+                    <FontAwesomeIcon icon={faContactBook} className="px-3" />
+                    Manage Contact
+                  </button>
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/">
+                {({ isActive }) => (
+                  <button className={isActive ? active : inActive}>
+                    <FontAwesomeIcon icon={faHome} className="px-3" />
+                    Home Page
                   </button>
                 )}
               </NavLink>

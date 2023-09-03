@@ -36,12 +36,12 @@ function Authentication() {
   const from = location?.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
-    const { displayName, email, pasasword, confirmPassword, photoURL, agree } =
+    const { displayName, email, password, confirmPassword, photoURL, agree } =
       data;
     setSpinner(true);
     if (agree) {
-      if (pasasword === confirmPassword) {
-        createUser(email, pasasword)
+      if (password === confirmPassword) {
+        createUser(email, password)
           .then((res) => {
             updateUserProfile(displayName, photoURL)
               .then(() => {
@@ -58,11 +58,9 @@ function Authentication() {
                       create,
                     }
                   )
-                  .then((res) => {
-                    if (res.data.acknowledged) {
-                      navigate(from, { replace: true });
-                      setSpinner(false);
-                    }
+                  .then(() => {
+                    navigate(from, { replace: true });
+                    setSpinner(false);
                   });
               })
               .catch((err) => {
@@ -82,7 +80,7 @@ function Authentication() {
         });
       }
     } else {
-      userLogIn(email, pasasword)
+      userLogIn(email, password)
         .then(() => {
           navigate(from, { replace: true });
           setSpinner(false);
@@ -109,22 +107,18 @@ function Authentication() {
             create,
           }
         )
-        .then((res) => {
-          if (res.data.acknowledged) {
-            navigate(from, { replace: true });
-          }
-        });
+        .then(() => navigate(from, { replace: true }));
     });
   };
 
   return (
     <div className="min-h-screen grid place-items-center">
-      <div className="grid lg:grid-cols-2 w-full">
+      <div className="grid lg:grid-cols-2 w-full place-items-center">
         <div className="col-span-1 hidden lg:block">
           <img
             src={toggle ? registerPic : loginPic}
             alt="auth_picture"
-            className="w-3/4 ms-auto"
+            className="w-4/5 ms-auto"
           />
         </div>
         <div className="col-span-1 grid place-items-center w-11/12 lg:w-3/6 mx-auto min-h-[70vh] lg:min-h-0">
@@ -184,16 +178,17 @@ function Authentication() {
               <div className="relative mb-3">
                 <input
                   type={showPass ? "text" : "password"}
-                  {...register("pasasword", {
+                  {...register("password", {
                     required: "Password is required",
-                    maxLength: {
+                    minLength: {
                       value: 6,
-                      message: "Password must be less than 6 characters long",
+                      message: "Password must be at least 6 characters long",
                     },
                     pattern: {
-                      value: /^[^A-Z!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]*$/,
+                      value:
+                        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
                       message:
-                        "Password must be contain a single digit and one uppercase letter, Don't use  uppercase letter and special character",
+                        "Password must contain at least one uppercase letter, one lowercase letter, and one digit",
                     },
                   })}
                   className="w-full border border-black ps-10 py-3 focus:outline-royalPurple"
@@ -209,9 +204,7 @@ function Authentication() {
                   className="absolute top-4 right-4 cursor-pointer text-base-300 dark:text-base-content"
                 />
                 <p className="text-red-600 text-xs">
-                  {errors.pasasword && (
-                    <span>{errors?.pasasword?.message}</span>
-                  )}
+                  {errors.password && <span>{errors?.password?.message}</span>}
                 </p>
               </div>
               {toggle && (
@@ -220,14 +213,15 @@ function Authentication() {
                     type={showPass ? "text" : "password"}
                     {...register("confirmPassword", {
                       required: "Password is required",
-                      maxLength: {
+                      minLength: {
                         value: 6,
-                        message: "Password must be less than 6 characters long",
+                        message: "Password must be at least 6 characters long",
                       },
                       pattern: {
-                        value: /^[^A-Z!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]*$/,
+                        value:
+                          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
                         message:
-                          "Password must be contain a single digit and one uppercase letter, Don't use  uppercase letter and special character",
+                          "Password must contain at least one uppercase letter, one lowercase letter, and one digit",
                       },
                     })}
                     className="w-full border border-black ps-10 py-3 focus:outline-royalPurple"
