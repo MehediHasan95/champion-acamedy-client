@@ -11,9 +11,6 @@ function Dashboard() {
 
   return (
     <div className="my-20">
-      {/* <div className="h-32 grid content-end text-center uppercase text-xl font-semibold bg-bg-base-200">
-        <span className="pb-5">{!isLoading && role.role} Dashboard</span>
-      </div> */}
       <div className="min-h-screen max-w-screen-2xl mx-auto">
         <div>
           <ul className="flex justify-start my-5">
@@ -95,7 +92,11 @@ function Dashboard() {
           {location.pathname === "/dashboard" && (
             <div className="min-h-[85vh] grid place-items-center">
               <div>
-                <p className="text-base lg:text-2xl">Student Dashboard</p>
+                <p className="text-base lg:text-2xl">
+                  {!isLoading && role.role === "student"
+                    ? "Student Dashboard"
+                    : "Instructor Dashboard"}
+                </p>
                 <h1 className="text-2xl lg:text-5xl font-bold">
                   Welcome back!{" "}
                   <span className="text-royalPurple underline">
