@@ -1,6 +1,8 @@
 "# champion-acamedy-client"
 
-### 🌍 Live Website Link [click here](https://champion-academyy.web.app/)
+# Champion Academy
+
+### [🌍LIVE](https://champion-academyy.web.app/)
 
 In creating this project, I used MERN stack technology. This is a learning website. Where students can buy classes with their favorite teachers. An instructor can add any classes related to their course. Admins can change the user's role and delete it. Also, admins can approve or deny any instructor classes.
 
